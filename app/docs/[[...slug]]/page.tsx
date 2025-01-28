@@ -1,12 +1,13 @@
-import { source } from '@/lib/source';
+import { openapi, source } from "@/lib/source";
 import {
   DocsPage,
   DocsBody,
   DocsDescription,
   DocsTitle,
-} from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
+} from "fumadocs-ui/page";
+import { notFound } from "next/navigation";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import { Pre, CodeBlock } from "fumadocs-ui/components/codeblock";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -15,14 +16,27 @@ export default async function Page(props: {
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  const MDX = page.data.body;
+  const MdxComponent = page.data.body;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX components={{ ...defaultMdxComponents }} />
+        <MdxComponent
+          components={{
+            ...defaultMdxComponents,
+            APIPage: openapi.APIPage,
+            pre: ({
+              ref: _ref, // eslint-disable-line @typescript-eslint/no-unused-vars
+              ...props
+            }) => (
+              <CodeBlock keepBackground {...props}>
+                <Pre>{props.children}</Pre>
+              </CodeBlock>
+            ),
+          }}
+        />
       </DocsBody>
     </DocsPage>
   );

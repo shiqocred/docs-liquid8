@@ -1,0 +1,13 @@
+{
+  "title": "Fumadocs Core",
+  "description": "The headless library",
+  "icon": "Library",
+  "root": true,
+  "pages": [
+    "---Intro---",
+    "index",
+    "---Example---",
+    "methods",
+    "tags"
+  ]
+}
