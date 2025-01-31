@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --front-end-color: hsl(250, 80%, 54%);
+  --back-end-color: hsl(220, 91%, 54%);
+}

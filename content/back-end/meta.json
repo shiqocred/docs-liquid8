@@ -1,0 +1,9 @@
+{
+    "title": "Back End",
+    "description": "Dokumentasi API WMS",
+    "icon": "Server",
+    "root": true,
+    "pages": [
+        "---Intro---", "index", "---Autentikasi---"
+    ]
+}

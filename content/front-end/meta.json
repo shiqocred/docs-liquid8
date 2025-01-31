@@ -1,0 +1,7 @@
+{
+    "title": "Front End",
+    "description": "Dokumentasi tampilan WMS",
+    "icon": "Layers",
+    "root": true,
+    "pages": ["---Intro---", "index", "---Kasir---", "back-end", "..."]
+}
