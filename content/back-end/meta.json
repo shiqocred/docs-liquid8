@@ -4,6 +4,6 @@
     "icon": "Server",
     "root": true,
     "pages": [
-        "---Intro---", "index", "---Autentikasi---"
+        "---Intro---", "index", "---Autentikasi---", "..."
     ]
 }

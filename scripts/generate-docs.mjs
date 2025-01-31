@@ -1,7 +1,7 @@
 import * as OpenAPI from 'fumadocs-openapi';
 import { rimrafSync } from 'rimraf';
 
-const out = './content/docs/methods';
+const out = './content/back-end';
 
 // clean generated files
 rimrafSync(out, {
