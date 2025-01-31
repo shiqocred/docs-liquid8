@@ -5,7 +5,7 @@ import {
   DocsDescription,
   DocsTitle,
 } from "fumadocs-ui/page";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { Pre, CodeBlock } from "fumadocs-ui/components/codeblock";
 
