@@ -1,67 +1,22 @@
 {
 	"openapi": "3.0.3",
 	"info": {
-		"title": "Dokploy API",
+		"title": "Backend API wms",
 		"description": "Endpoints for dokploy",
 		"version": "1.0.0"
 	},
 	"servers": [
 		{
-			"url": "http://your-dokploy-instance.com/api"
+			"url": "https://server.wms-liquid8.online/api"
 		}
 	],
 	"paths": {
-		"/admin.one": {
-			"get": {
-				"operationId": "admin-one-get",
-				"tags": ["admin"],
-				"security": [
-					{
-						"Authorization": []
-					}
-				],
-				"parameters": [],
-				"responses": {
-					"200": {
-						"description": "Successful response",
-						"content": {
-							"application/json": {}
-						}
-					},
-					"400": {
-						"$ref": "#/components/responses/admin.get.one/200"
-					},
-					"default": {
-						"$ref": "#/components/responses/error"
-					}
-				}
-			},
-			"delete": {
-				"operationId": "admin-one-delete",
-				"tags": ["admin"],
-				"security": [
-					{
-						"Authorization": []
-					}
-				],
-				"parameters": [],
-				"responses": {
-					"200": {
-						"description": "Successful response",
-						"content": {
-							"application/json": {}
-						}
-					},
-					"default": {
-						"$ref": "#/components/responses/error"
-					}
-				}
-			}
-		},
-		"/admin.createUserInvitation": {
+		"/login": {
 			"post": {
-				"operationId": "admin-createUserInvitation",
-				"tags": ["admin"],
+				"operationId": "login",
+				"tags": [
+					"login"
+				],
 				"security": [
 					{
 						"Authorization": []
@@ -76,10 +31,17 @@
 								"properties": {
 									"email": {
 										"type": "string",
-										"format": "email"
+										"format": "email_or_username"
+									},
+									"password": {
+										"type": "string",
+										"minLength": 1
 									}
 								},
-								"required": ["email"],
+								"required": [
+									"email_or_username",
+									"password"
+								],
 								"additionalProperties": false
 							}
 						}
@@ -88,25 +50,193 @@
 				"parameters": [],
 				"responses": {
 					"200": {
-						"description": "Successful response",
+						"description": "Successful login",
 						"content": {
-							"application/json": {}
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean"
+												},
+												"message": {
+													"type": "string"
+												},
+												"resource": {
+													"type": "array",
+													"items": [
+														{
+															"type": "string"
+														},
+														{
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"username": {
+																	"type": "string"
+																},
+																"email": {
+																	"type": "string"
+																},
+																"api_key": {
+																	"type": "null"
+																},
+																"role_id": {
+																	"type": "integer"
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time"
+																},
+																"format_barcode_id": {
+																	"type": "null"
+																},
+																"role_name": {
+																	"type": "string"
+																},
+																"check_scan": {
+																	"type": "string"
+																},
+																"format_barcode_name": {
+																	"type": "null"
+																},
+																"format_barcode": {
+																	"type": "null"
+																}
+															}
+														}
+													]
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					},
-					"default": {
-						"$ref": "#/components/responses/error"
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
 					}
 				}
 			}
 		},
-		"/admin.removeUser": {
+		"/generate": {
 			"post": {
-				"operationId": "admin-removeUser",
-				"tags": ["admin"],
-				"security": [
-					{
-						"Authorization": []
+				"operationId": "inbound-generate",
+				"tags": [
+					"inbound"
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary",
+										"description": "Excel file to be uploaded",
+										"pattern": "^.*\\.(xlsx|xls)$"
+									}
+								},
+								"required": [
+									"file"
+								],
+								"additionalProperties": false
+							}
+						}
 					}
+				},
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Berhasil mengimpor data",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean"
+												},
+												"message": {
+													"type": "string"
+												},
+												"resource": {
+													"type": "object",
+													"properties": {
+														"code_document": {
+															"type": "string",
+															"example": "0002/01/2025"
+														},
+														"headers": {
+															"type": "array",
+															"items": {
+																"type": "string"
+															}
+														},
+														"file_name": {
+															"type": "string"
+														},
+														"fileDetails": {
+															"type": "object",
+															"properties": {
+																"total_column_count": {
+																	"type": "integer"
+																},
+																"total_row_count": {
+																	"type": "integer"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				}
+			}
+		},
+		"/generate/merge-headers": {
+			"post": {
+				"operationId": "inbound-mergeHeaders",
+				"tags": [
+					"inbound"
 				],
 				"requestBody": {
 					"required": true,
@@ -115,27 +245,354 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"authId": {
+									"code_document": {
 										"type": "string",
-										"minLength": 1
+										"example": "0002/01/2025"
 									},
-									"name": {
-										"type": "string",
-										"minLength": 3
+									"headerMappings": {
+										"type": "object",
+										"properties": {
+											"old_barcode_product": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												},
+												"example": [
+													"Barcode"
+												]
+											},
+											"old_name_product": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												},
+												"example": [
+													"Description"
+												]
+											},
+											"old_price_product": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												},
+												"example": [
+													"Unit Price"
+												]
+											},
+											"old_quantity_product": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												},
+												"example": [
+													"Qty"
+												]
+											}
+										},
+										"required": [
+											"old_barcode_product",
+											"old_name_product",
+											"old_price_product",
+											"old_quantity_product"
+										]
 									}
 								},
-								"required": ["authId", "name"],
-								"additionalProperties": false
+								"required": [
+									"code_document",
+									"headerMappings"
+								]
 							}
 						}
 					}
 				},
-				"parameters": [],
 				"responses": {
 					"200": {
-						"description": "Successful response",
+						"description": "Successfully merged headers",
 						"content": {
-							"application/json": {}
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"inserted_rows": {
+																	"type": "integer"
+																},
+																"riwayat check": {
+																	"type": "object",
+																	"properties": {
+																		"user_id": {
+																			"type": "integer"
+																		},
+																		"code_document": {
+																			"type": "string"
+																		},
+																		"base_document": {
+																			"type": "string"
+																		},
+																		"total_data": {
+																			"type": "integer"
+																		},
+																		"total_data_in": {
+																			"type": "integer"
+																		},
+																		"total_data_lolos": {
+																			"type": "integer"
+																		},
+																		"total_data_damaged": {
+																			"type": "integer"
+																		},
+																		"total_data_abnormal": {
+																			"type": "integer"
+																		},
+																		"total_discrepancy": {
+																			"type": "integer"
+																		},
+																		"status_approve": {
+																			"type": "string"
+																		},
+																		"precentage_total_data": {
+																			"type": "integer"
+																		},
+																		"percentage_in": {
+																			"type": "integer"
+																		},
+																		"percentage_lolos": {
+																			"type": "integer"
+																		},
+																		"percentage_damaged": {
+																			"type": "integer"
+																		},
+																		"percentage_abnormal": {
+																			"type": "integer"
+																		},
+																		"percentage_discrepancy": {
+																			"type": "integer"
+																		},
+																		"total_price": {
+																			"type": "integer"
+																		},
+																		"updated_at": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"created_at": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"id": {
+																			"type": "integer"
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				}
+			}
+		},
+		"/documents": {
+			"get": {
+				"operationId": "inbound-document",
+				"tags": [
+					"inbound"
+				],
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"description": "Page number for pagination",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "q",
+						"in": "query",
+						"description": "Search query string",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "List of Documents",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"current_page": {
+																	"type": "integer"
+																},
+																"data": {
+																	"type": "array",
+																	"items": {
+																		"type": "object",
+																		"properties": {
+																			"id": {
+																				"type": "integer"
+																			},
+																			"code_document": {
+																				"type": "string"
+																			},
+																			"base_document": {
+																				"type": "string"
+																			},
+																			"total_column_document": {
+																				"type": "integer"
+																			},
+																			"total_column_in_document": {
+																				"type": "integer"
+																			},
+																			"date_document": {
+																				"type": "string",
+																				"format": "date"
+																			},
+																			"status_document": {
+																				"type": "string"
+																			},
+																			"custom_barcode": {
+																				"type": [
+																					"string",
+																					"null"
+																				]
+																			},
+																			"created_at": {
+																				"type": "string",
+																				"format": "date-time"
+																			},
+																			"updated_at": {
+																				"type": "string",
+																				"format": "date-time"
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				}
+			}
+		},
+		"/user_scan_webs/{code_document}": {
+			"get": {
+				"operationId": "inbound-detail-user-scan-web",
+				"tags": [
+					"inbound"
+				],
+				"parameters": [
+					{
+						"name": "code_document",
+						"in": "path",
+						"required": true,
+						"description": "Document code to get scan details",
+						"schema": {
+							"type": "string"
+						},
+						"example": "0002/01/2025"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User scan web details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"summary": {
+																	"type": "object",
+																	"properties": {
+																		"count_user": {
+																			"type": "integer"
+																		},
+																		"total_scans_all": {
+																			"type": "integer"
+																		},
+																		"total_scans_today": {
+																			"type": "integer"
+																		}
+																	}
+																},
+																"data": {
+																	"type": "array",
+																	"items": {
+																		"type": "object"
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
 						}
 					},
 					"default": {
@@ -144,57 +601,497 @@
 				}
 			}
 		},
-		"/admin.getUserByToken": {
+		"/product_olds-search": {
 			"get": {
-				"operationId": "admin-getUserByToken",
-				"tags": ["admin"],
+				"operationId": "inbound-manifes-Inbound-",
+				"tags": [
+					"inbound"
+				],
+				"parameters": [
+					{
+						"name": "search",
+						"in": "query",
+						"description": "Search by code document",
+						"schema": {
+							"type": "string"
+						},
+						"example": "0002/01/2025"
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "q",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"security": [
 					{
 						"Authorization": []
 					}
 				],
+				"responses": {
+					"200": {
+						"description": "List of products",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"document_name": {
+																	"type": "string"
+																},
+																"status": {
+																	"type": "string"
+																},
+																"total_columns": {
+																	"type": "integer"
+																},
+																"custom_barcode": {
+																	"type": [
+																		"string",
+																		"null"
+																	]
+																},
+																"code_document": {
+																	"type": "string"
+																},
+																"data": {
+																	"allOf": [
+																		{
+																			"$ref": "#/components/responses/PaginationMeta"
+																		},
+																		{
+																			"properties": {
+																				"data": {
+																					"type": "array",
+																					"items": {
+																						"type": "object",
+																						"properties": {
+																							"id": {
+																								"type": "integer"
+																							},
+																							"code_document": {
+																								"type": "string"
+																							},
+																							"old_barcode_product": {
+																								"type": "string"
+																							},
+																							"old_name_product": {
+																								"type": "string"
+																							},
+																							"old_quantity_product": {
+																								"type": "integer"
+																							},
+																							"old_price_product": {
+																								"type": "string"
+																							},
+																							"custom_barcode": {
+																								"type": [
+																									"string",
+																									"null"
+																								]
+																							},
+																							"days_since_created": {
+																								"type": "string"
+																							},
+																							"created_at": {
+																								"type": "string",
+																								"format": "date-time"
+																							},
+																							"updated_at": {
+																								"type": "string",
+																								"format": "date-time"
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				}
+			}
+		},
+		"/search_barcode_product": {
+			"get": {
+				"operationId": "inbound-multi-check-search-product",
+				"tags": [
+					"inbound"
+				],
 				"parameters": [
 					{
-						"name": "token",
+						"name": "code_document",
 						"in": "query",
 						"required": true,
+						"description": "code Document",
 						"schema": {
-							"type": "string",
-							"minLength": 1
+							"type": "string"
+						},
+						"example": "0002/01/2025"
+					},
+					{
+						"name": "old_barcode_product",
+						"in": "query",
+						"required": true,
+						"description": "Product barcode to search",
+						"schema": {
+							"type": "string"
+						},
+						"example": "LXAD-33289733411211"
+					}
+				],
+				"security": [
+					{
+						"Authorization": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"product": {
+																	"type": "object",
+																	"properties": {
+																		"id": {
+																			"type": "integer"
+																		},
+																		"code_document": {
+																			"type": "string"
+																		},
+																		"old_barcode_product": {
+																			"type": "string"
+																		},
+																		"old_name_product": {
+																			"type": "string"
+																		},
+																		"old_quantity_product": {
+																			"type": "integer"
+																		},
+																		"old_price_product": {
+																			"type": "string"
+																		},
+																		"created_at": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"updated_at": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"days_since_created": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				}
+			}
+		},
+		"/product-approves": {
+			"post": {
+				"operationId": "inbound-product-approve-add",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Approve or update product information",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"code_document": {
+										"type": "string",
+										"example": "0127/01/2025"
+									},
+									"condition": {
+										"type": "string",
+										"example": "lolos"
+									},
+									"deskripsi": {
+										"type": "string",
+										"example": ""
+									},
+									"new_category_product": {
+										"type": "string",
+										"example": ""
+									},
+									"new_date_in_product": {
+										"type": "string",
+										"format": "date",
+										"example": "2025-01-31"
+									},
+									"new_name_product": {
+										"type": "string",
+										"example": "JAS HUJAN SEKALI PAKAI / RAIN COAT / DISPOSABLE RAIN COAT / JAS HUJAN"
+									},
+									"new_price_product": {
+										"type": "string",
+										"example": "0.00"
+									},
+									"new_quantity_product": {
+										"type": "integer",
+										"example": 1
+									},
+									"new_status_product": {
+										"type": "string",
+										"example": "display"
+									},
+									"new_tag_product": {
+										"type": "string",
+										"example": "Brown"
+									},
+									"old_barcode_product": {
+										"type": "string",
+										"example": "Spxr-0000000012"
+									},
+									"old_name_product": {
+										"type": "string",
+										"example": "JAS HUJAN SEKALI PAKAI / RAIN COAT / DISPOSABLE RAIN COAT / JAS HUJAN"
+									},
+									"old_price_product": {
+										"type": "string",
+										"example": "15500.00"
+									}
+								},
+								"required": [
+									"code_document",
+									"condition",
+									"old_barcode_product",
+									"old_name_product",
+									"old_price_product"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Product approval successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/responses/SuccessResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"429": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/documents/{id_document}": {
+			"delete": {
+				"operationId": "delete-document",
+				"tags": [
+					"documents"
+				],
+				"summary": "Delete a document by its ID",
+				"parameters": [
+					{
+						"name": "id_document",
+						"in": "path",
+						"required": true,
+						"description": "ID of the document to be deleted",
+						"schema": {
+							"type": "integer",
+							"example": 2
 						}
 					}
 				],
 				"responses": {
 					"200": {
-						"description": "Successful response",
+						"description": "Document successfully deleted",
 						"content": {
-							"application/json": {}
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean",
+													"example": true
+												},
+												"message": {
+													"type": "string",
+													"example": "data berhasil dihapus"
+												},
+												"resource": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "integer",
+															"example": 2
+														},
+														"code_document": {
+															"type": "string",
+															"example": "0002/01/2025"
+														},
+														"base_document": {
+															"type": "string",
+															"example": "tester.xlsx"
+														},
+														"total_column_document": {
+															"type": "integer",
+															"example": 9
+														},
+														"total_column_in_document": {
+															"type": "integer",
+															"example": 5
+														},
+														"date_document": {
+															"type": "string",
+															"format": "date",
+															"example": "2025-01-31"
+														},
+														"status_document": {
+															"type": "string",
+															"example": "pending"
+														},
+														"custom_barcode": {
+															"type": "string",
+															"example": null
+														},
+														"created_at": {
+															"type": "string",
+															"format": "date-time",
+															"example": "2025-01-31T02:19:13.000000Z"
+														},
+														"updated_at": {
+															"type": "string",
+															"format": "date-time",
+															"example": "2025-01-31T02:19:13.000000Z"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					},
-					"default": {
-						"$ref": "#/components/responses/error"
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"429": {
+						"$ref": "#/components/responses/ErrorResponse"
 					}
-				}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
 			}
 		}
 	},
 	"components": {
 		"securitySchemes": {
 			"Authorization": {
-				"type": "http",
-				"scheme": "bearer",
-				"bearerFormat": "JWT"
+				"type": "https",
+				"scheme": "bearer"
 			}
 		},
 		"responses": {
-			"admin.get.one": {
-				"200": {
-					"description":"Error response"
-				},
-				"400": {
-					"description":"Error response"
-				}
-			},
 			"error": {
 				"description": "Error response",
 				"content": {
@@ -202,14 +1099,6 @@
 						"schema": {
 							"type": "object",
 							"properties": {
-								"data": {
-									"type": "object",
-									"properties": {
-										"status": {
-											"type": "boolean"
-										}
-									}
-								},
 								"message": {
 									"type": "string"
 								},
@@ -225,13 +1114,174 @@
 												"type": "string"
 											}
 										},
-										"required": ["message"],
+										"required": [
+											"message"
+										],
 										"additionalProperties": false
 									}
 								}
 							},
-							"required": ["message", "code"],
+							"required": [
+								"message",
+								"code"
+							],
 							"additionalProperties": false
+						}
+					}
+				}
+			},
+			"SuccessResponse": {
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"properties": {
+							"status": {
+								"type": "boolean"
+							},
+							"message": {
+								"type": "string"
+							},
+							"resource": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"PaginationMeta": {
+				"type": "object",
+				"properties": {
+					"current_page": {
+						"type": "integer"
+					},
+					"from": {
+						"type": "integer"
+					},
+					"last_page": {
+						"type": "integer"
+					},
+					"per_page": {
+						"type": "integer"
+					},
+					"to": {
+						"type": "integer"
+					},
+					"total": {
+						"type": "integer"
+					},
+					"first_page_url": {
+						"type": "string"
+					},
+					"last_page_url": {
+						"type": "string"
+					},
+					"next_page_url": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"prev_page_url": {
+						"type": [
+							"string",
+							"null"
+						]
+					},
+					"path": {
+						"type": "string"
+					},
+					"links": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"url": {
+									"type": [
+										"string",
+										"null"
+									]
+								},
+								"label": {
+									"type": "string"
+								},
+								"active": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				}
+			},
+			"ErrorResponse": {
+				"description": "Error response",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "object",
+							"properties": {
+								"data": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "boolean",
+											"default": false
+										},
+										"message": {
+											"type": "string"
+										},
+										"resource": {
+											"oneOf": [
+												{
+													"type": "array",
+													"items": {}
+												},
+												{
+													"type": "null"
+												}
+											]
+										}
+									}
+								}
+							}
+						},
+						"examples": {
+							"notFound": {
+								"value": {
+									"data": {
+										"status": false,
+										"message": "Data tidak ditemukan",
+										"resource": null
+									}
+								}
+							},
+							"unauthorized": {
+								"value": {
+									"data": {
+										"status": false,
+										"message": "Unauthorized",
+										"resource": []
+									}
+								}
+							},
+							"serverError": {
+								"value": {
+									"data": {
+										"status": false,
+										"message": "Terjadi kesalahan pada server",
+										"resource": null
+									}
+								}
+							},
+							"tooManyRequests": {
+								"value": {
+									"data": {
+										"status": false,
+										"message": "Terlalu banyak request, silakan coba lagi nanti",
+										"resource": null
+									}
+								}
+							}
 						}
 					}
 				}
@@ -240,88 +1290,10 @@
 	},
 	"tags": [
 		{
-			"name": "admin"
+			"name": "login"
 		},
 		{
-			"name": "docker"
-		},
-		{
-			"name": "compose"
-		},
-		{
-			"name": "registry"
-		},
-		{
-			"name": "cluster"
-		},
-		{
-			"name": "user"
-		},
-		{
-			"name": "domain"
-		},
-		{
-			"name": "destination"
-		},
-		{
-			"name": "backup"
-		},
-		{
-			"name": "deployment"
-		},
-		{
-			"name": "mounts"
-		},
-		{
-			"name": "certificates"
-		},
-		{
-			"name": "settings"
-		},
-		{
-			"name": "security"
-		},
-		{
-			"name": "redirects"
-		},
-		{
-			"name": "port"
-		},
-		{
-			"name": "project"
-		},
-		{
-			"name": "application"
-		},
-		{
-			"name": "mysql"
-		},
-		{
-			"name": "postgres"
-		},
-		{
-			"name": "redis"
-		},
-		{
-			"name": "mongo"
-		},
-		{
-			"name": "mariadb"
-		},
-		{
-			"name": "sshRouter"
-		},
-		{
-			"name": "gitProvider"
-		},
-		{
-			"name": "bitbucket"
-		},
-		{
-			"name": "github"
-		},
-		{
-			"name": "gitlab"
+			"name": "inbound"
 		}
 	],
 	"externalDocs": {
