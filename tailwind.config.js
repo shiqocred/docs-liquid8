@@ -11,5 +11,9 @@ export default {
     './node_modules/fumadocs-ui/dist/**/*.js',
     './node_modules/fumadocs-openapi/dist/**/*.js',
   ],
-  presets: [createPreset()],
+  presets: [createPreset(
+    {
+      preset: "ocean"
+    }
+  )],
 };

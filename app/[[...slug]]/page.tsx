@@ -8,6 +8,10 @@ import {
 import { notFound, permanentRedirect } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { Pre, CodeBlock } from "fumadocs-ui/components/codeblock";
+import { Card, Cards } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+import { cn } from "fumadocs-ui/components/api";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -29,6 +33,16 @@ export default async function Page(props: {
           components={{
             ...defaultMdxComponents,
             APIPage: openapi.APIPage,
+            BU: (props) => (
+              <b>
+                <ins>{props.children}</ins>
+              </b>
+            ),
+            ImageZoom: (props) => (
+              <div className="rounded-xl bg-gradient-to-br from-pink-500 to-blue-500 p-4 prose-no-margin">
+                <ImageZoom {...(props as any)} />
+              </div>
+            ),
             pre: ({
               ref: _ref, // eslint-disable-line @typescript-eslint/no-unused-vars
               ...props
@@ -37,6 +51,9 @@ export default async function Page(props: {
                 <Pre>{props.children}</Pre>
               </CodeBlock>
             ),
+            Card,
+            Cards,
+            Callout,
           }}
         />
       </DocsBody>
