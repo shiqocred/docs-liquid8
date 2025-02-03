@@ -1,6 +1,61 @@
 ---
 title: "Manifest Inbound"
+description: "Manifest inbound merupakan ..."
 ---
+
+import {Step, Steps} from 'fumadocs-ui/components/steps'
+
+## Unggah Data
+
+<Steps>
+    <Step>
+        Unggah file excel di halaman <BU>Inbound Proses</BU>, dengan _Drag and Drop_ file atau dengan menekan ruang upload file.
+        
+        <ImageZoom src="/image/inbound/manifest/a-1.png" width={3276} height={2018} alt="Upload Inbound Process" className="rounded-lg m-0" />
+    </Step>
+
+    <Step>
+        Tekan tombol <BU>Next</BU> untuk melanjutkan memilih header yang diperlukan, tekan <BU>Complete</BU> untuk menyelesaikan proses.
+
+        <Callout>Jika gagal memilih header karena halaman ke-refresh, user wajib menghapus data di halaman <BU>Manifest Inbound</BU> atau klik <BU>Here</BU></Callout>
+
+        <ImageZoom src="/image/inbound/manifest/b-1.png" width={3276} height={2018} alt="Header Inbound Process" className="rounded-lg m-0" />
+    </Step>
+</Steps>
+
+## Kelola Data
+
+import { ArrowUpRightFromSquare, ShieldCheck, ReceiptText, Trash2 } from "lucide-react"
+
+File yang berhasil di unggah akan disimpan di halaman <BU>Manifest Inbound</BU>
+        
+<ImageZoom src="/image/inbound/manifest/c-1.png" width={3276} height={2018} alt="Upload Inbound Process" className="rounded-lg m-0" />
+
+### Deskripsi header tabel
+
+| Nama          | Deskripsi                                          | Ket                                                               |
+|---------------|----------------------------------------------------|-------------------------------------------------------------------|
+| Document Name | Nama dari dokumen yang di unggah di Inbound Proses | -                                                                 |
+| Date          | Tanggal file di unggah                             | -                                                                 |
+| Total Items   | Total barang di dalam data                         | -                                                                 |
+| Status        | Status Data                                        | [<ArrowUpRightFromSquare className='size-4'/>](#list-status-data) |
+| Action        | Opsi untuk data tersebut                           | [<ArrowUpRightFromSquare className='size-4'/>](#list-action-data) |
+
+### List status Data
+
+| Nama          | Deskripsi                             |
+|---------------|---------------------------------------|
+| In Progress   | Data dalam proses penginputan barang  |
+| Pending       | Data belum diproses atau data gagal   |
+| Done          | Data telah selesai di proses          |
+
+### List action Data
+
+| Nama   | Icon                               | Deskripsi                             |
+|--------|------------------------------------|---------------------------------------|
+| Check  | <ShieldCheck className='size-4' /> | Melakukan input barang sesuai data     |
+| Detail | <ReceiptText className='size-4' /> | Menampilkan halaman detail data       |
+| Delete | <Trash2 className='size-4' />      | menghapus data                        |
 
 - Pertama upload data excel dengan cara buka pada halaman “Inbound Process”, setelah terupload lalu dipilih header yang diperlukan.
   ![Inbound Process](/image/inbound/manifest/a.png "Inbound Process")
