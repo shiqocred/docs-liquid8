@@ -1082,6 +1082,2535 @@
 					}
 				]
 			}
+		},
+		"/excelOld": {
+			"post": {
+				"operationId": "inbound-bulking-category",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Upload and process Excel document",
+				"description": "Upload Excel file for bulk color tag processing. The Excel file must contain the following columns: 'Barcode', 'Description', 'Category', 'Qty', 'Unit Price','Bast', 'Discount', 'Price After Discount'.",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary",
+										"description": "Excel file to be uploaded (.xlsx, .xls)",
+										"contentMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+									}
+								},
+								"required": [
+									"file"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Document successfully processed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"code_document": {
+																	"type": "string",
+																	"example": "0001/02/2025"
+																},
+																"file_name": {
+																	"type": "string",
+																	"example": "SO STAGING 29.08.24-6.xlsx"
+																},
+																"total_column_count": {
+																	"type": "integer",
+																	"example": 9
+																},
+																"total_row_count": {
+																	"type": "integer",
+																	"example": 100
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"429": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/bulking_tag_warna": {
+			"post": {
+				"operationId": "inbound-bulking-tag-colors",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Upload and process bulk color tags document",
+				"description": "Upload Excel file for bulk color tag processing. The Excel file must contain the following columns: 'Waybill', 'Isi Barang', 'Qty', 'Nilai Barang Satuan'.",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary",
+										"description": "Excel file to be uploaded (.xlsx, .xls). Required headers: 'Waybill', 'Isi Barang', 'Qty', 'Nilai Barang Satuan'",
+										"contentMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+									}
+								},
+								"required": [
+									"file"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Document successfully processed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"code_document": {
+																	"type": "string",
+																	"example": "0004/02/2025"
+																},
+																"file_name": {
+																	"type": "string",
+																	"example": "testing.xlsx"
+																},
+																"total_column_count": {
+																	"type": "integer",
+																	"example": 8
+																},
+																"total_row_count": {
+																	"type": "integer",
+																	"example": 6
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"429": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/add_product": {
+			"post": {
+				"operationId": "manual-inbound",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Add a new product",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"condition": {
+										"type": "string",
+										"example": "lolos",
+										"description": "Product condition status"
+									},
+									"description": {
+										"type": "string",
+										"example": "",
+										"description": "Product description"
+									},
+									"new_category_product": {
+										"type": "string",
+										"example": "FMCG",
+										"description": "Product category"
+									},
+									"new_name_product": {
+										"type": "string",
+										"example": "test input data",
+										"description": "Product name"
+									},
+									"new_price_product": {
+										"type": "string",
+										"example": "75000",
+										"description": "New product price"
+									},
+									"new_quantity_product": {
+										"type": "string",
+										"example": "2",
+										"description": "Product quantity"
+									},
+									"new_status_product": {
+										"type": "string",
+										"example": "display",
+										"description": "Product status"
+									},
+									"new_tag_product": {
+										"type": "string",
+										"example": "",
+										"description": "Product tag"
+									},
+									"old_price_product": {
+										"type": "string",
+										"example": "150000",
+										"description": "Original product price"
+									}
+								},
+								"required": [
+									"condition",
+									"new_category_product",
+									"new_name_product",
+									"new_price_product",
+									"new_quantity_product",
+									"new_status_product",
+									"old_price_product"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Product successfully added",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer",
+																	"example": 7
+																},
+																"old_price_product": {
+																	"type": "string",
+																	"example": "150000"
+																},
+																"new_name_product": {
+																	"type": "string",
+																	"example": "test input data"
+																},
+																"new_quantity_product": {
+																	"type": "string",
+																	"example": "2"
+																},
+																"new_price_product": {
+																	"type": "string",
+																	"example": "75000"
+																},
+																"new_status_product": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"new_category_product": {
+																	"type": "string",
+																	"example": "FMCG"
+																},
+																"new_tag_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"user_id": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"new_date_in_product": {
+																	"type": "string",
+																	"format": "date",
+																	"example": "2025-02-02"
+																},
+																"new_quality": {
+																	"type": "string",
+																	"example": "{\"lolos\":\"lolos\",\"damaged\":null,\"abnormal\":null}"
+																},
+																"new_discount": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"type": {
+																	"type": "string",
+																	"example": "type1"
+																},
+																"display_price": {
+																	"type": "string",
+																	"example": "75000"
+																},
+																"new_barcode_product": {
+																	"type": "string",
+																	"example": "L1FF17QFC"
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T06:33:53.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T06:33:53.000000Z"
+																},
+																"days_since_created": {
+																	"type": "string",
+																	"example": "0 Hari"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/get-latestPrice": {
+			"get": {
+				"operationId": "inbound-otomatis-price",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get latest price and categories or color information",
+				"description": "Returns category information if price >= 100000, or color information if price < 100000",
+				"parameters": [
+					{
+						"name": "old_price_product",
+						"in": "query",
+						"required": true,
+						"description": "Original product price to check. If value < 100000, returns color information. If value >= 100000, returns categories information.",
+						"schema": {
+							"type": "string"
+						},
+						"example": "150000"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved price information",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"category": {
+																	"type": [
+																		"array",
+																		"null"
+																	],
+																	"items": {
+																		"type": "object",
+																		"properties": {
+																			"id": {
+																				"type": "integer",
+																				"example": 1
+																			},
+																			"name_category": {
+																				"type": "string",
+																				"example": "TOYS HOBBIES (200-699)"
+																			},
+																			"discount_category": {
+																				"type": "integer",
+																				"example": 50
+																			},
+																			"max_price_category": {
+																				"type": "string",
+																				"format": "decimal",
+																				"example": "699999.00"
+																			},
+																			"created_at": {
+																				"type": "string",
+																				"format": "date-time",
+																				"example": "2025-01-28T00:41:29.000000Z"
+																			},
+																			"updated_at": {
+																				"type": "string",
+																				"format": "date-time",
+																				"example": "2025-01-28T00:41:29.000000Z"
+																			}
+																		}
+																	}
+																},
+																"warna": {
+																	"type": [
+																		"object",
+																		"null"
+																	],
+																	"properties": {
+																		"fixed_price_color": {
+																			"type": "string",
+																			"format": "decimal",
+																			"example": "25000.00"
+																		},
+																		"name_color": {
+																			"type": "string",
+																			"example": "merah"
+																		},
+																		"hexa_code_color": {
+																			"type": "string",
+																			"example": "#FF0000"
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								},
+								"examples": {
+									"price_above_100k": {
+										"summary": "Response when price >= 100000",
+										"value": {
+											"data": {
+												"status": true,
+												"message": "list category",
+												"resource": {
+													"category": [
+														{
+															"id": 1,
+															"name_category": "TOYS HOBBIES (200-699)",
+															"discount_category": 50,
+															"max_price_category": "699999.00",
+															"created_at": "2025-01-28T00:41:29.000000Z",
+															"updated_at": "2025-01-28T00:41:29.000000Z"
+														}
+													],
+													"warna": null
+												}
+											}
+										}
+									},
+									"price_below_100k": {
+										"summary": "Response when price < 100000",
+										"value": {
+											"data": {
+												"status": true,
+												"message": "list category",
+												"resource": {
+													"category": null,
+													"warna": {
+														"fixed_price_color": "25000.00",
+														"name_color": "merah",
+														"hexa_code_color": "#FF0000"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/historys": {
+			"get": {
+				"operationId": "inbound-get-history",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get paginated history of documents",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "Page number for pagination",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						},
+						"example": 1
+					},
+					{
+						"name": "q",
+						"in": "query",
+						"required": false,
+						"description": "Search query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved history data",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"allOf": [
+																{
+																	"$ref": "#/components/schemas/PaginationMeta"
+																},
+																{
+																	"properties": {
+																		"data": {
+																			"type": "array",
+																			"items": {
+																				"type": "object",
+																				"properties": {
+																					"id": {
+																						"type": "integer",
+																						"example": 3
+																					},
+																					"code_document": {
+																						"type": "string",
+																						"example": "0001/02/2025"
+																					},
+																					"base_document": {
+																						"type": "string",
+																						"example": "SO STAGING 29.08.24-6.xlsx"
+																					},
+																					"total_data": {
+																						"type": "integer",
+																						"example": 100
+																					},
+																					"total_data_in": {
+																						"type": "integer",
+																						"example": 100
+																					},
+																					"status_approve": {
+																						"type": "string",
+																						"example": "display",
+																						"enum": [
+																							"display",
+																							"done"
+																						]
+																					},
+																					"created_at": {
+																						"type": "string",
+																						"format": "date-time",
+																						"example": "2025-02-02T05:51:54.000000Z"
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															]
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/historys/{id}": {
+			"get": {
+				"operationId": "inbound-history-detail",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get detailed information of a specific history record",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "History record ID",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 3
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved history detail",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer",
+																	"example": 3
+																},
+																"user_id": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"code_document": {
+																	"type": "string",
+																	"example": "0001/02/2025"
+																},
+																"base_document": {
+																	"type": "string",
+																	"example": "SO STAGING 29.08.24-6.xlsx"
+																},
+																"total_product_category": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"total_product_color": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"total_product_sales": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"total_product_stagings": {
+																	"type": "integer",
+																	"example": 100
+																},
+																"total_product_approve": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"total_product_bundle": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"total_data": {
+																	"type": "integer",
+																	"example": 100
+																},
+																"total_data_in": {
+																	"type": "integer",
+																	"example": 100
+																},
+																"total_data_lolos": {
+																	"type": "integer",
+																	"example": 100
+																},
+																"total_data_damaged": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"total_data_abnormal": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"total_discrepancy": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"status_approve": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"precentage_total_data": {
+																	"type": "string",
+																	"example": "0.00"
+																},
+																"percentage_in": {
+																	"type": "string",
+																	"example": "0.00"
+																},
+																"percentage_lolos": {
+																	"type": "string",
+																	"example": "0.00"
+																},
+																"percentage_damaged": {
+																	"type": "string",
+																	"example": "0.00"
+																},
+																"percentage_abnormal": {
+																	"type": "string",
+																	"example": "0.00"
+																},
+																"percentage_discrepancy": {
+																	"type": "string",
+																	"example": "0.00"
+																},
+																"total_price": {
+																	"type": "string",
+																	"example": "0.00"
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T05:51:54.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T05:51:54.000000Z"
+																},
+																"damaged": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"lolos": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"abnormal": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"damagedStaging": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"lolosStaging": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 18229702
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"abnormalStaging": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"damagedAp": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"lolosAp": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"abnormalAp": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"lolosSale": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"lolosBundle": {
+																	"type": "object",
+																	"properties": {
+																		"total_old_price": {
+																			"type": "integer",
+																			"example": 0
+																		},
+																		"price_percentage": {
+																			"type": "integer",
+																			"example": 0
+																		}
+																	}
+																},
+																"priceDiscrepancy": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"price_percentage": {
+																	"type": "integer",
+																	"example": 0
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/product_scans": {
+			"get": {
+				"operationId": "inbound-product-scans",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get paginated list of scanned products",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "Page number for pagination",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						},
+						"example": 1
+					},
+					{
+						"name": "q",
+						"in": "query",
+						"required": false,
+						"description": "Search query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved product scans",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"allOf": [
+																{
+																	"$ref": "#/components/schemas/PaginationMeta"
+																},
+																{
+																	"properties": {
+																		"data": {
+																			"type": "array",
+																			"items": {
+																				"type": "object",
+																				"properties": {
+																					"id": {
+																						"type": "integer",
+																						"example": 156
+																					},
+																					"user_id": {
+																						"type": "integer",
+																						"example": 36
+																					},
+																					"product_name": {
+																						"type": "string",
+																						"example": "REXONA ROLL ON DREAMY WHITE 40 ML - DEODORANT"
+																					},
+																					"product_price": {
+																						"type": "string",
+																						"format": "decimal",
+																						"example": "10490.00"
+																					},
+																					"image": {
+																						"type": "string",
+																						"example": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQLzIFA6aTSTmgb9xT_g5XY14g7DBwzz-1X_z4rjQSYElApzIwfzMCDVgdOTnpLSeMxTs2bzcSi8_GEZYmIAp2gIj1ekL0J_k0kBi5y_-9fihQrcGACQHbT&usqp=CAE"
+																					},
+																					"image_url": {
+																						"type": "string",
+																						"example": "/storage/product_images/https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQLzIFA6aTSTmgb9xT_g5XY14g7DBwzz-1X_z4rjQSYElApzIwfzMCDVgdOTnpLSeMxTs2bzcSi8_GEZYmIAp2gIj1ekL0J_k0kBi5y_-9fihQrcGACQHbT&usqp=CAE"
+																					},
+																					"created_at": {
+																						"type": "string",
+																						"format": "date-time",
+																						"example": "2025-01-16T15:09:17.000000Z"
+																					},
+																					"updated_at": {
+																						"type": "string",
+																						"format": "date-time",
+																						"example": "2025-01-16T15:09:17.000000Z"
+																					},
+																					"user": {
+																						"type": "object",
+																						"properties": {
+																							"id": {
+																								"type": "integer",
+																								"example": 36
+																							},
+																							"name": {
+																								"type": "string",
+																								"example": "developer"
+																							},
+																							"username": {
+																								"type": "string",
+																								"example": "developer"
+																							},
+																							"email": {
+																								"type": "string",
+																								"format": "email",
+																								"example": "developer@gmail.com"
+																							},
+																							"email_verified_at": {
+																								"type": [
+																									"string",
+																									"null"
+																								],
+																								"format": "date-time",
+																								"example": null
+																							},
+																							"api_key": {
+																								"type": "string",
+																								"example": "2NSQ4iaN3kK8HhW5uyEMavEtcOOBwMhFdvotCIonNqi4UVwBk87gLaMmB5DS"
+																							},
+																							"role_id": {
+																								"type": "integer",
+																								"example": 7
+																							},
+																							"format_barcode_id": {
+																								"type": "integer",
+																								"example": 9
+																							},
+																							"format_barcode_name": {
+																								"type": "string",
+																								"example": "MTC-SC"
+																							},
+																							"format_barcode": {
+																								"type": "object",
+																								"properties": {
+																									"id": {
+																										"type": "integer",
+																										"example": 9
+																									},
+																									"format": {
+																										"type": "string",
+																										"example": "MTC-SC"
+																									},
+																									"total_user": {
+																										"type": "integer",
+																										"example": 3
+																									},
+																									"total_scan": {
+																										"type": "integer",
+																										"example": 40
+																									},
+																									"user_id": {
+																										"type": "integer",
+																										"example": 14
+																									},
+																									"username": {
+																										"type": "string",
+																										"example": "developer"
+																									},
+																									"deleted_at": {
+																										"type": [
+																											"string",
+																											"null"
+																										],
+																										"format": "date-time",
+																										"example": null
+																									},
+																									"created_at": {
+																										"type": "string",
+																										"format": "date-time",
+																										"example": "2024-11-30T03:18:17.000000Z"
+																									},
+																									"updated_at": {
+																										"type": "string",
+																										"format": "date-time",
+																										"example": "2025-01-16T15:09:17.000000Z"
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															]
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/product_scans/{id}": {
+			"delete": {
+				"operationId": "inbound-delete-product-scan",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Delete a product scan by ID",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "ID of the product scan to delete",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 156
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product scan successfully deleted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "null",
+															"example": null
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/product_scan_search": {
+			"get": {
+				"operationId": "inbound-product-scan-id",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get product details by ID",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "query",
+						"required": true,
+						"description": "Product ID to search",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 155
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved product details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"product": {
+																	"type": "object",
+																	"properties": {
+																		"id": {
+																			"type": "integer",
+																			"example": 155
+																		},
+																		"user_id": {
+																			"type": "integer",
+																			"example": 36
+																		},
+																		"product_name": {
+																			"type": "string",
+																			"example": "JAM TANGAN CASIO F-105W-1A ORIGINAL - F105W HITAM"
+																		},
+																		"product_price": {
+																			"type": "string",
+																			"format": "decimal",
+																			"example": "321300.00"
+																		},
+																		"created_at": {
+																			"type": "string",
+																			"format": "date-time",
+																			"example": "2025-01-16T14:59:29.000000Z"
+																		},
+																		"updated_at": {
+																			"type": "string",
+																			"format": "date-time",
+																			"example": "2025-01-16T14:59:29.000000Z"
+																		},
+																		"image": {
+																			"type": "string",
+																			"example": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSshoW1_0ucDM8dOMjTYYfBPBdfIgKnIhzI2FKAfux-XENM64jTHgyK-tZQOiBd5iDuWs7oJnc9Du8i7RkNkH6FO1REf-lQ_hN0HmBqT5wP&usqp=CAE"
+																		},
+																		"new_barcode_product": {
+																			"type": "string",
+																			"example": "LSCJ4OA9"
+																		},
+																		"old_barcode_product": {
+																			"type": "string",
+																			"example": "LSCJ4OA9"
+																		},
+																		"image_url": {
+																			"type": "string",
+																			"example": "/storage/product_images/https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSshoW1_0ucDM8dOMjTYYfBPBdfIgKnIhzI2FKAfux-XENM64jTHgyK-tZQOiBd5iDuWs7oJnc9Du8i7RkNkH6FO1REf-lQ_hN0HmBqT5wP&usqp=CAE"
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/to_product_input": {
+			"post": {
+				"operationId": "inbound-add-product-input",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Add product to input",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"code_document": {
+										"type": [
+											"string",
+											"null"
+										],
+										"example": null,
+										"description": "Document code reference"
+									},
+									"condition": {
+										"type": "string",
+										"example": "lolos",
+										"description": "Product condition"
+									},
+									"description": {
+										"type": "string",
+										"example": "",
+										"description": "Product description"
+									},
+									"new_barcode_product": {
+										"type": "string",
+										"example": "LSCJ3F1E",
+										"description": "New product barcode"
+									},
+									"new_category_product": {
+										"type": "string",
+										"example": "FMCG",
+										"description": "Product category"
+									},
+									"new_date_in_product": {
+										"type": "string",
+										"format": "date",
+										"example": "2025-01-16",
+										"description": "Product input date"
+									},
+									"new_name_product": {
+										"type": "string",
+										"example": "JAM TANGAN CASIO F-105W-1A ORIGINAL - F105W HITAM",
+										"description": "New product name"
+									},
+									"new_price_product": {
+										"type": "number",
+										"example": 160650,
+										"description": "New product price"
+									},
+									"new_quantity_product": {
+										"type": "string",
+										"example": "1",
+										"description": "Product quantity"
+									},
+									"new_status_product": {
+										"type": "string",
+										"example": "display",
+										"description": "Product status"
+									},
+									"new_tag_product": {
+										"type": "string",
+										"example": "",
+										"description": "Product tag"
+									},
+									"old_barcode_product": {
+										"type": "string",
+										"example": "LSCJ3F1E",
+										"description": "Original product barcode"
+									},
+									"old_name_product": {
+										"type": "string",
+										"example": "JAM TANGAN CASIO F-105W-1A ORIGINAL - F105W HITAM",
+										"description": "Original product name"
+									},
+									"old_price_product": {
+										"type": "string",
+										"example": "321300.00",
+										"description": "Original product price"
+									}
+								},
+								"required": [
+									"condition",
+									"new_barcode_product",
+									"new_category_product",
+									"new_date_in_product",
+									"new_name_product",
+									"new_price_product",
+									"new_quantity_product",
+									"new_status_product",
+									"old_barcode_product",
+									"old_name_product",
+									"old_price_product"
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Product successfully added to input",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer",
+																	"example": 201
+																},
+																"code_document": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"old_barcode_product": {
+																	"type": "string",
+																	"example": "LSCJ3F1E"
+																},
+																"new_barcode_product": {
+																	"type": "string",
+																	"example": "LSCJ3F1E"
+																},
+																"new_name_product": {
+																	"type": "string",
+																	"example": "JAM TANGAN CASIO F-105W-1A ORIGINAL - F105W HITAM"
+																},
+																"new_quantity_product": {
+																	"type": "string",
+																	"example": "1"
+																},
+																"new_price_product": {
+																	"type": "number",
+																	"example": 160650
+																},
+																"old_price_product": {
+																	"type": "string",
+																	"example": "321300.00"
+																},
+																"new_status_product": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"new_category_product": {
+																	"type": "string",
+																	"example": "FMCG"
+																},
+																"new_tag_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"new_date_in_product": {
+																	"type": "string",
+																	"format": "date",
+																	"example": "2025-02-02"
+																},
+																"new_quality": {
+																	"type": "string",
+																	"example": "{\"lolos\":\"lolos\",\"damaged\":null,\"abnormal\":null}"
+																},
+																"new_discount": {
+																	"type": "integer",
+																	"example": 0
+																},
+																"display_price": {
+																	"type": "number",
+																	"example": 160650
+																},
+																"type": {
+																	"type": "string",
+																	"example": "type2"
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T09:45:24.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T09:45:24.000000Z"
+																},
+																"days_since_created": {
+																	"type": "string",
+																	"example": "0 Hari"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/product_inputs": {
+			"get": {
+				"operationId": "inbound-product-inputs",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get paginated list of product inputs",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "Page number for pagination",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						},
+						"example": 1
+					},
+					{
+						"name": "q",
+						"in": "query",
+						"required": false,
+						"description": "Search query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved product inputs",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"total_price": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "37794442.30"
+																},
+																"products": {
+																	"type": "object",
+																	"allOf": [
+																		{
+																			"$ref": "#/components/schemas/PaginationMeta"
+																		},
+																		{
+																			"properties": {
+																				"data": {
+																					"type": "array",
+																					"items": {
+																						"type": "object",
+																						"properties": {
+																							"id": {
+																								"type": "integer",
+																								"example": 201
+																							},
+																							"code_document": {
+																								"type": [
+																									"string",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"old_barcode_product": {
+																								"type": "string",
+																								"example": "LSCJ3F1E"
+																							},
+																							"new_barcode_product": {
+																								"type": "string",
+																								"example": "LSCJ3F1E"
+																							},
+																							"new_name_product": {
+																								"type": "string",
+																								"example": "JAM TANGAN CASIO F-105W-1A ORIGINAL - F105W HITAM"
+																							},
+																							"new_quantity_product": {
+																								"type": "integer",
+																								"example": 1
+																							},
+																							"new_price_product": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "160650.00"
+																							},
+																							"old_price_product": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "321300.00"
+																							},
+																							"new_date_in_product": {
+																								"type": "string",
+																								"format": "date",
+																								"example": "2025-02-02"
+																							},
+																							"new_status_product": {
+																								"type": "string",
+																								"example": "display"
+																							},
+																							"new_quality": {
+																								"type": "string",
+																								"example": "{\"lolos\":\"lolos\",\"damaged\":null,\"abnormal\":null}"
+																							},
+																							"new_category_product": {
+																								"type": "string",
+																								"example": "FMCG"
+																							},
+																							"new_tag_product": {
+																								"type": [
+																									"string",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"new_discount": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "0.00"
+																							},
+																							"display_price": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "160650.00"
+																							},
+																							"user_id": {
+																								"type": [
+																									"integer",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"created_at": {
+																								"type": "string",
+																								"format": "date-time",
+																								"example": "2025-02-02T09:45:24.000000Z"
+																							},
+																							"updated_at": {
+																								"type": "string",
+																								"format": "date-time",
+																								"example": "2025-02-02T09:45:24.000000Z"
+																							},
+																							"type": {
+																								"type": "string",
+																								"example": "type2"
+																							},
+																							"image": {
+																								"type": [
+																									"string",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"days_since_created": {
+																								"type": "string",
+																								"example": "0 Hari"
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/filter-product-input": {
+			"get": {
+				"operationId": "inbound-filter-product-input",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get filtered list of products",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "Page number for pagination",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						},
+						"example": 1
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved filtered products",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"allOf": [
+																{
+																	"$ref": "#/components/schemas/PaginationMeta"
+																},
+																{
+																	"properties": {
+																		"data": {
+																			"type": "array",
+																			"items": {
+																				"type": "object",
+																				"properties": {
+																					"id": {
+																						"type": "integer",
+																						"example": 27
+																					},
+																					"code_document": {
+																						"type": "string",
+																						"example": "SC/12/2024"
+																					},
+																					"old_barcode_product": {
+																						"type": [
+																							"string",
+																							"null"
+																						],
+																						"example": null
+																					},
+																					"new_barcode_product": {
+																						"type": "string",
+																						"example": "MTC-SC36M5lgp"
+																					},
+																					"new_name_product": {
+																						"type": "string",
+																						"example": "Casio Jam Tangan Pria F-94WA-9DG"
+																					},
+																					"new_quantity_product": {
+																						"type": "integer",
+																						"example": 1
+																					},
+																					"new_price_product": {
+																						"type": "string",
+																						"format": "decimal",
+																						"example": "179400.00"
+																					},
+																					"old_price_product": {
+																						"type": "string",
+																						"format": "decimal",
+																						"example": "299000.00"
+																					},
+																					"new_date_in_product": {
+																						"type": "string",
+																						"format": "date",
+																						"example": "2024-12-20"
+																					},
+																					"new_status_product": {
+																						"type": "string",
+																						"example": "display"
+																					},
+																					"new_quality": {
+																						"type": "string",
+																						"example": "{\"lolos\":\"lolos\",\"damaged\":null,\"abnormal\":null}"
+																					},
+																					"new_category_product": {
+																						"type": "string",
+																						"example": "TOYS HOBBIES (>700)"
+																					},
+																					"new_tag_product": {
+																						"type": [
+																							"string",
+																							"null"
+																						],
+																						"example": null
+																					},
+																					"new_discount": {
+																						"type": "string",
+																						"format": "decimal",
+																						"example": "0.00"
+																					},
+																					"display_price": {
+																						"type": "string",
+																						"format": "decimal",
+																						"example": "179400.00"
+																					},
+																					"user_id": {
+																						"type": "integer",
+																						"example": 14
+																					},
+																					"created_at": {
+																						"type": "string",
+																						"format": "date-time",
+																						"example": "2024-12-20T02:47:08.000000Z"
+																					},
+																					"updated_at": {
+																						"type": "string",
+																						"format": "date-time",
+																						"example": "2024-12-20T02:47:08.000000Z"
+																					},
+																					"type": {
+																						"type": "string",
+																						"example": "type2"
+																					},
+																					"image": {
+																						"type": "string",
+																						"example": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTUaA5lWTha3dk3IEWbKgJ0HGok5r7p62Arls1uzhO-xCdGt75amYv86gcUY1oiGAP572suisGDtkNWM2yeMqUdtSeT3HkHRuzIE-7fx6giUtyPeWYs_m4IJg&usqp=CAE"
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															]
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/filter-product-input/{id}/add": {
+			"post": {
+				"operationId": "inbound-add-filtered-product",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Add filtered product to list",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "Product ID to filter",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 201
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Product successfully added",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer",
+																	"example": 29
+																},
+																"code_document": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"old_barcode_product": {
+																	"type": "string",
+																	"example": "LSCJ3F1E"
+																},
+																"new_barcode_product": {
+																	"type": "string",
+																	"example": "LSCJ3F1E"
+																},
+																"new_name_product": {
+																	"type": "string",
+																	"example": "JAM TANGAN CASIO F-105W-1A ORIGINAL - F105W HITAM"
+																},
+																"new_quantity_product": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"new_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "160650.00"
+																},
+																"old_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "321300.00"
+																},
+																"new_date_in_product": {
+																	"type": "string",
+																	"format": "date",
+																	"example": "2025-02-02"
+																},
+																"new_status_product": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"new_quality": {
+																	"type": "string",
+																	"example": "{\"lolos\":\"lolos\",\"damaged\":null,\"abnormal\":null}"
+																},
+																"new_category_product": {
+																	"type": "string",
+																	"example": "FMCG"
+																},
+																"new_tag_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"new_discount": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "0.00"
+																},
+																"display_price": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "160650.00"
+																},
+																"user_id": {
+																	"type": "integer",
+																	"example": 14
+																},
+																"type": {
+																	"type": "string",
+																	"example": "type2"
+																},
+																"image": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T02:45:24.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-02T02:45:24.000000Z"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/product_inputs/{id}": {
+			"delete": {
+				"operationId": "inbound-delete-product-input",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Delete a product input by ID",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "ID of the product input to delete",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 175
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product successfully deleted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer",
+																	"example": 175
+																},
+																"code_document": {
+																	"type": "string",
+																	"example": "SC/12/2024"
+																},
+																"old_barcode_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"new_barcode_product": {
+																	"type": "string",
+																	"example": "12NAS2433q7vSX"
+																},
+																"new_name_product": {
+																	"type": "string",
+																	"example": "Yamalube Silver Oli Mesin Motor Bebek 20W-40 / 0.8 Liter untuk Motor 4-Tak Yamaha"
+																},
+																"new_quantity_product": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"new_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "40000.00"
+																},
+																"old_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "44707.00"
+																},
+																"new_date_in_product": {
+																	"type": "string",
+																	"format": "date",
+																	"example": "2024-12-18"
+																},
+																"new_status_product": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"new_quality": {
+																	"type": "string",
+																	"example": "{\"lolos\":null,\"damaged\":null,\"abnormal\":null}"
+																},
+																"new_category_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"new_tag_product": {
+																	"type": "string",
+																	"example": "orange apk"
+																},
+																"new_discount": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "0.00"
+																},
+																"display_price": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "40000.00"
+																},
+																"user_id": {
+																	"type": "integer",
+																	"example": 33
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2024-12-18T03:29:53.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2024-12-18T03:29:53.000000Z"
+																},
+																"type": {
+																	"type": "string",
+																	"example": "type2"
+																},
+																"image": {
+																	"type": "string",
+																	"example": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSnepHKY2epV8jIVeXe-8-FZiBJPMt1bZ0i2Yn_VsQsFM544pj6BpMXIqkK2dh9XPt_m_95Qr4uX5hJyHgQ3B7NqH1cREIUVCiuqzUWu9Z3ig9mbCvQ8TnH0A&usqp=CAE"
+																},
+																"days_since_created": {
+																	"type": "string",
+																	"example": "46 Hari"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/product_inputs/{1}": {
+			"get": {
+				"operationId": "inbound-product-input-detail",
+				"tags": [
+					"inbound"
+				],
+				"summary": "Get detailed information of a product input",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "ID of the product input to retrieve",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 198
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved product input detail",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer",
+																	"example": 198
+																},
+																"code_document": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"old_barcode_product": {
+																	"type": "string",
+																	"example": "LSC60D82"
+																},
+																"new_barcode_product": {
+																	"type": "string",
+																	"example": "LSC60D82"
+																},
+																"new_name_product": {
+																	"type": "string",
+																	"example": "Macbook Pro 2020 M1 13\" EX IBOX ORIGINAL SECOND LIKE NEW MULUS PERFECT RAM 8/16GB ..."
+																},
+																"new_quantity_product": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"new_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "6859999.30"
+																},
+																"old_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "9799999.00"
+																},
+																"new_date_in_product": {
+																	"type": "string",
+																	"format": "date",
+																	"example": "2025-01-16"
+																},
+																"new_status_product": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"new_quality": {
+																	"type": "string",
+																	"example": "{\"lolos\":\"lolos\",\"damaged\":null,\"abnormal\":null}"
+																},
+																"new_category_product": {
+																	"type": "string",
+																	"example": "ELEKTRONIK HV"
+																},
+																"new_tag_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"new_discount": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "0.00"
+																},
+																"display_price": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "6859999.30"
+																},
+																"user_id": {
+																	"type": [
+																		"integer",
+																		"null"
+																	],
+																	"example": null
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-01-16T08:25:46.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-01-16T08:25:46.000000Z"
+																},
+																"type": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"image": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"days_since_created": {
+																	"type": "string",
+																	"example": "17 Hari"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
 		}
 	},
 	"components": {
