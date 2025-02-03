@@ -2138,7 +2138,7 @@
 															"type": "object",
 															"allOf": [
 																{
-																	"$ref": "#/components/schemas/PaginationMeta"
+																	"$ref": "#/components/responses/PaginationMeta"
 																},
 																{
 																	"properties": {
