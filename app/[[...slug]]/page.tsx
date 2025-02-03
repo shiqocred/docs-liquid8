@@ -11,7 +11,6 @@ import { Pre, CodeBlock } from "fumadocs-ui/components/codeblock";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { Callout } from "fumadocs-ui/components/callout";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
-import { cn } from "fumadocs-ui/components/api";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
