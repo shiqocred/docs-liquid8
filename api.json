@@ -13,44 +13,13 @@
 	"paths": {
 		"/login": {
 			"post": {
-				"operationId": "login",
+				"operationId": "auth-login",
 				"tags": [
-					"login"
+					"auth"
 				],
-				"security": [
-					{
-						"Authorization": []
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"email": {
-										"type": "string",
-										"format": "email_or_username"
-									},
-									"password": {
-										"type": "string",
-										"minLength": 1
-									}
-								},
-								"required": [
-									"email_or_username",
-									"password"
-								],
-								"additionalProperties": false
-							}
-						}
-					}
-				},
-				"parameters": [],
 				"responses": {
 					"200": {
-						"description": "Successful login",
+						"description": "Login Success",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -60,60 +29,88 @@
 											"type": "object",
 											"properties": {
 												"status": {
-													"type": "boolean"
+													"type": "boolean",
+													"example": true
 												},
 												"message": {
-													"type": "string"
+													"type": "string",
+													"example": "berhasil login"
 												},
 												"resource": {
 													"type": "array",
+													"minItems": 2,
+													"maxItems": 2,
 													"items": [
 														{
-															"type": "string"
+															"type": "string",
+															"example": "14|NAm4BrFFLIqKd7C4d4kyIexEZbOdgQNOKcleC3eJaf4240a2"
 														},
 														{
 															"type": "object",
 															"properties": {
 																"id": {
-																	"type": "integer"
+																	"type": "integer",
+																	"example": 1
 																},
 																"name": {
-																	"type": "string"
+																	"type": "string",
+																	"example": "sugeng"
 																},
 																"username": {
-																	"type": "string"
+																	"type": "string",
+																	"example": "sugeng1"
 																},
 																"email": {
-																	"type": "string"
+																	"type": "string",
+																	"example": "sugeng@gmail.com"
 																},
 																"api_key": {
-																	"type": "null"
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
 																},
 																"role_id": {
-																	"type": "integer"
+																	"type": "integer",
+																	"example": 1
 																},
 																"created_at": {
 																	"type": "string",
-																	"format": "date-time"
+																	"example": "2025-01-28T00:41:30.000000Z"
 																},
 																"updated_at": {
 																	"type": "string",
-																	"format": "date-time"
+																	"example": "2025-01-28T00:41:30.000000Z"
 																},
 																"format_barcode_id": {
-																	"type": "null"
+																	"type": [
+																		"integer",
+																		"null"
+																	],
+																	"example": null
 																},
 																"role_name": {
-																	"type": "string"
+																	"type": "string",
+																	"example": "Admin"
 																},
 																"check_scan": {
-																	"type": "string"
+																	"type": "string",
+																	"example": "true"
 																},
 																"format_barcode_name": {
-																	"type": "null"
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
 																},
 																"format_barcode": {
-																	"type": "null"
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
 																}
 															}
 														}
@@ -125,15 +122,6 @@
 								}
 							}
 						}
-					},
-					"401": {
-						"$ref": "#/components/responses/ErrorResponse"
-					},
-					"404": {
-						"$ref": "#/components/responses/ErrorResponse"
-					},
-					"500": {
-						"$ref": "#/components/responses/ErrorResponse"
 					}
 				}
 			}
@@ -971,7 +959,7 @@
 			"delete": {
 				"operationId": "delete-document",
 				"tags": [
-					"documents"
+					"inbound"
 				],
 				"summary": "Delete a document by its ID",
 				"parameters": [
@@ -3611,6 +3599,1303 @@
 					}
 				]
 			}
+		},
+		"/staging/filter_product": {
+			"get": {
+				"operationId": "staging-filter-product",
+				"tags": [
+					"staging"
+				],
+				"summary": "Get filtered list of staging products",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "Page number for pagination",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						},
+						"example": 1
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved filtered products",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean",
+													"example": true
+												},
+												"message": {
+													"type": "string",
+													"example": "list product filter"
+												},
+												"resource": {
+													"type": "object",
+													"properties": {
+														"total_new_price": {
+															"type": "integer",
+															"example": 60000
+														},
+														"data": {
+															"type": "object",
+															"properties": {
+																"current_page": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"data": {
+																	"type": "array",
+																	"items": {
+																		"type": "object",
+																		"properties": {
+																			"id": {
+																				"type": "integer",
+																				"example": 107
+																			},
+																			"new_barcode_product": {
+																				"type": "string",
+																				"example": "175L24059"
+																			},
+																			"new_name_product": {
+																				"type": "string",
+																				"example": "TOURSH Pria Sepatu Kasual Lace-up Tahan Air Suede Mode Man Sepatu Sneakers Runing Sepatu"
+																			},
+																			"new_category_product": {
+																				"type": "string",
+																				"example": "FASHION"
+																			},
+																			"new_price_product": {
+																				"type": "string",
+																				"format": "decimal",
+																				"example": "60000.00"
+																			},
+																			"old_price_product": {
+																				"type": "string",
+																				"format": "decimal",
+																				"example": "150000.00"
+																			},
+																			"new_status_product": {
+																				"type": "string",
+																				"example": "display"
+																			},
+																			"stage": {
+																				"type": "string",
+																				"example": "process"
+																			},
+																			"days_since_created": {
+																				"type": "string",
+																				"example": "0 Hari"
+																			}
+																		}
+																	}
+																},
+																"first_page_url": {
+																	"type": "string",
+																	"example": "http://127.0.0.1:8000/api/staging/filter_product?page=1"
+																},
+																"from": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"last_page": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"last_page_url": {
+																	"type": "string",
+																	"example": "http://127.0.0.1:8000/api/staging/filter_product?page=1"
+																},
+																"links": {
+																	"type": "array",
+																	"items": {
+																		"type": "object",
+																		"properties": {
+																			"url": {
+																				"type": [
+																					"string",
+																					"null"
+																				],
+																				"example": null
+																			},
+																			"label": {
+																				"type": "string",
+																				"example": "1"
+																			},
+																			"active": {
+																				"type": "boolean",
+																				"example": true
+																			}
+																		}
+																	}
+																},
+																"next_page_url": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"path": {
+																	"type": "string",
+																	"example": "http://127.0.0.1:8000/api/staging/filter_product"
+																},
+																"per_page": {
+																	"type": "integer",
+																	"example": 50
+																},
+																"prev_page_url": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"to": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"total": {
+																	"type": "integer",
+																	"example": 1
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/staging/filter_product/{id}/add": {
+			"post": {
+				"operationId": "staging-add-product",
+				"tags": [
+					"staging"
+				],
+				"summary": "Add product to staging list",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "Product ID",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 106
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully added product to staging",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean",
+													"example": true
+												},
+												"message": {
+													"type": "string",
+													"example": "berhasil menambah list product staging"
+												},
+												"resource": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "integer",
+															"example": 106
+														},
+														"code_document": {
+															"type": "string",
+															"example": "0001/02/2025"
+														},
+														"old_barcode_product": {
+															"type": "string",
+															"example": "175L24057"
+														},
+														"new_barcode_product": {
+															"type": "string",
+															"example": "175L24057"
+														},
+														"new_name_product": {
+															"type": "string",
+															"example": "TOURSH Pria Sepatu Kasual Lace-up Tahan Air Suede Mode Man Sepatu Sneakers Runing Sepatu"
+														},
+														"new_quantity_product": {
+															"type": "integer",
+															"example": 1
+														},
+														"new_price_product": {
+															"type": "string",
+															"format": "decimal",
+															"example": "60000.00"
+														},
+														"old_price_product": {
+															"type": "string",
+															"format": "decimal",
+															"example": "150000.00"
+														},
+														"new_date_in_product": {
+															"type": "string",
+															"format": "date",
+															"example": "2025-02-02"
+														},
+														"new_status_product": {
+															"type": "string",
+															"example": "display"
+														},
+														"new_quality": {
+															"type": "string",
+															"example": "{\"lolos\":\"lolos\"}"
+														},
+														"new_category_product": {
+															"type": "string",
+															"example": "FASHION"
+														},
+														"new_tag_product": {
+															"type": [
+																"string",
+																"null"
+															],
+															"example": null
+														},
+														"new_discount": {
+															"type": "string",
+															"format": "decimal",
+															"example": "0.00"
+														},
+														"display_price": {
+															"type": "string",
+															"format": "decimal",
+															"example": "60000.00"
+														},
+														"created_at": {
+															"type": "string",
+															"format": "date-time",
+															"example": "2025-02-01T17:00:00.000000Z"
+														},
+														"updated_at": {
+															"type": "string",
+															"format": "date-time",
+															"example": "2025-02-03T09:06:09.000000Z"
+														},
+														"type": {
+															"type": "string",
+															"example": "type1"
+														},
+														"user_id": {
+															"type": "integer",
+															"example": 1
+														},
+														"stage": {
+															"type": "string",
+															"example": "process"
+														},
+														"days_since_created": {
+															"type": "string",
+															"example": "1 Hari"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/staging/filter_product/destroy/{id}": {
+			"delete": {
+				"operationId": "staging-destroy-product",
+				"tags": [
+					"staging"
+				],
+				"summary": "Delete a product from filter list",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "Product ID to be deleted",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 106
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully deleted product from filter list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"id": {
+																	"type": "integer",
+																	"example": 106
+																},
+																"code_document": {
+																	"type": "string",
+																	"example": "0001/02/2025"
+																},
+																"old_barcode_product": {
+																	"type": "string",
+																	"example": "175L24057"
+																},
+																"new_barcode_product": {
+																	"type": "string",
+																	"example": "175L24057"
+																},
+																"new_name_product": {
+																	"type": "string",
+																	"example": "TOURSH Pria Sepatu Kasual Lace-up Tahan Air Suede Mode Man Sepatu Sneakers Runing Sepatu"
+																},
+																"new_quantity_product": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"new_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "60000.00"
+																},
+																"old_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "150000.00"
+																},
+																"new_date_in_product": {
+																	"type": "string",
+																	"format": "date",
+																	"example": "2025-02-02"
+																},
+																"new_status_product": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"new_quality": {
+																	"type": "string",
+																	"example": "{\"lolos\":\"lolos\"}"
+																},
+																"new_category_product": {
+																	"type": "string",
+																	"example": "FASHION"
+																},
+																"new_tag_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"new_discount": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "0.00"
+																},
+																"display_price": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "60000.00"
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-01T17:00:00.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-03T09:20:01.000000Z"
+																},
+																"type": {
+																	"type": "string",
+																	"example": "type1"
+																},
+																"user_id": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"stage": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"days_since_created": {
+																	"type": "string",
+																	"example": "1 Hari"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/staging/move_to_lpr/{id}": {
+			"post": {
+				"operationId": "move-staging-product-to-lpr",
+				"tags": [
+					"staging"
+				],
+				"summary": "Pindahkan produk dari staging ke LPR",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "ID produk yang akan dipindahkan",
+						"schema": {
+							"type": "integer"
+						},
+						"example": 106
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"description": {
+										"type": "string",
+										"example": "barang tidak sesuai"
+									},
+									"status": {
+										"type": "string",
+										"example": "abnormal"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Produk berhasil dipindahkan dari staging ke LPR",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"code_document": {
+																	"type": "string",
+																	"example": "0001/02/2025"
+																},
+																"old_barcode_product": {
+																	"type": "string",
+																	"example": "175L24057"
+																},
+																"new_barcode_product": {
+																	"type": "string",
+																	"example": "175L24057"
+																},
+																"new_name_product": {
+																	"type": "string",
+																	"example": "TOURSH Pria Sepatu Kasual Lace-up Tahan Air Suede Mode Man Sepatu Sneakers Runing Sepatu"
+																},
+																"new_quantity_product": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"new_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "60000.00"
+																},
+																"old_price_product": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "150000.00"
+																},
+																"new_date_in_product": {
+																	"type": "string",
+																	"format": "date",
+																	"example": "2025-02-02"
+																},
+																"new_status_product": {
+																	"type": "string",
+																	"example": "display"
+																},
+																"new_quality": {
+																	"type": "string",
+																	"example": "{\"lolos\":null,\"damaged\":null,\"abnormal\":\"barang tidak sesuai\"}"
+																},
+																"new_category_product": {
+																	"type": "string",
+																	"example": "FASHION"
+																},
+																"new_tag_product": {
+																	"type": [
+																		"string",
+																		"null"
+																	],
+																	"example": null
+																},
+																"new_discount": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "0.00"
+																},
+																"display_price": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "60000.00"
+																},
+																"created_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-03T02:26:11.000000Z"
+																},
+																"updated_at": {
+																	"type": "string",
+																	"format": "date-time",
+																	"example": "2025-02-03T02:26:11.000000Z"
+																},
+																"type": {
+																	"type": "string",
+																	"example": "type1"
+																},
+																"user_id": {
+																	"type": "integer",
+																	"example": 1
+																},
+																"id": {
+																	"type": "integer",
+																	"example": 8
+																},
+																"days_since_created": {
+																	"type": "string",
+																	"example": "0 Hari"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"429": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/staging_products": {
+			"get": {
+				"operationId": "staging-products-get",
+				"tags": [
+					"staging"
+				],
+				"summary": "Get list of staging products",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "Page number for pagination",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						},
+						"example": 1
+					},
+					{
+						"name": "q",
+						"in": "query",
+						"required": false,
+						"description": "Search query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved staging products",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean",
+													"example": true
+												},
+												"message": {
+													"type": "string",
+													"example": "List of new products"
+												},
+												"resource": {
+													"type": "object",
+													"properties": {
+														"current_page": {
+															"type": "integer",
+															"example": 1
+														},
+														"data": {
+															"type": "array",
+															"items": {
+																"type": "object",
+																"properties": {
+																	"id": {
+																		"type": "integer",
+																		"example": 106
+																	},
+																	"new_barcode_product": {
+																		"type": "string",
+																		"example": "175L24057"
+																	},
+																	"new_name_product": {
+																		"type": "string",
+																		"example": "TOURSH Pria Sepatu Kasual Lace-up Tahan Air Suede Mode Man Sepatu Sneakers Runing Sepatu"
+																	},
+																	"new_category_product": {
+																		"type": "string",
+																		"example": "FASHION"
+																	},
+																	"new_price_product": {
+																		"type": "string",
+																		"format": "decimal",
+																		"example": "60000.00"
+																	},
+																	"new_status_product": {
+																		"type": "string",
+																		"example": "display"
+																	},
+																	"display_price": {
+																		"type": "string",
+																		"format": "decimal",
+																		"example": "60000.00"
+																	},
+																	"new_date_in_product": {
+																		"type": "string",
+																		"format": "date",
+																		"example": "2025-02-02"
+																	},
+																	"stage": {
+																		"type": [
+																			"string",
+																			"null"
+																		],
+																		"example": null
+																	},
+																	"days_since_created": {
+																		"type": "string",
+																		"example": "0 Hari"
+																	}
+																}
+															}
+														},
+														"first_page_url": {
+															"type": "string",
+															"example": "http://127.0.0.1:8000/api/staging_products?page=1"
+														},
+														"from": {
+															"type": "integer",
+															"example": 1
+														},
+														"last_page": {
+															"type": "integer",
+															"example": 5
+														},
+														"last_page_url": {
+															"type": "string",
+															"example": "http://127.0.0.1:8000/api/staging_products?page=5"
+														},
+														"links": {
+															"type": "array",
+															"items": {
+																"type": "object",
+																"properties": {
+																	"url": {
+																		"type": [
+																			"string",
+																			"null"
+																		],
+																		"example": "http://127.0.0.1:8000/api/staging_products?page=1"
+																	},
+																	"label": {
+																		"type": "string",
+																		"example": "1"
+																	},
+																	"active": {
+																		"type": "boolean",
+																		"example": true
+																	}
+																}
+															}
+														},
+														"next_page_url": {
+															"type": "string",
+															"example": "http://127.0.0.1:8000/api/staging_products?page=2"
+														},
+														"path": {
+															"type": "string",
+															"example": "http://127.0.0.1:8000/api/staging_products"
+														},
+														"per_page": {
+															"type": "integer",
+															"example": 33
+														},
+														"prev_page_url": {
+															"type": [
+																"string",
+																"null"
+															],
+															"example": null
+														},
+														"to": {
+															"type": "integer",
+															"example": 33
+														},
+														"total": {
+															"type": "integer",
+															"example": 153
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			},
+			"post": {
+				"operationId": "staging-products-post",
+				"tags": [
+					"staging"
+				],
+				"summary": "Create staging approval",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"new_barcode_product": {
+										"type": "string",
+										"example": "175L24057"
+									},
+									"new_name_product": {
+										"type": "string",
+										"example": "TOURSH Pria Sepatu Kasual Lace-up Tahan Air Suede Mode Man Sepatu Sneakers Runing Sepatu"
+									},
+									"new_category_product": {
+										"type": "string",
+										"example": "FASHION"
+									},
+									"new_price_product": {
+										"type": "string",
+										"format": "decimal",
+										"example": "60000.00"
+									},
+									"new_status_product": {
+										"type": "string",
+										"example": "display"
+									},
+									"new_date_in_product": {
+										"type": "string",
+										"format": "date",
+										"example": "2025-02-02"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Staging approve berhasil dibuat",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean",
+													"example": true
+												},
+												"message": {
+													"type": "string",
+													"example": "staging approve berhasil dibuat"
+												},
+												"resource": {
+													"type": "null"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				}
+			}
+		},
+		"/staging_approves": {
+			"get": {
+				"operationId": "get-staging-approves",
+				"tags": [
+					"staging"
+				],
+				"summary": "Get paginated list of staging approves",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"required": false,
+						"description": "Page number for pagination",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						},
+						"example": 1
+					},
+					{
+						"name": "q",
+						"in": "query",
+						"required": false,
+						"description": "Search query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successfully retrieved product inputs",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/responses/SuccessResponse"
+										},
+										{
+											"properties": {
+												"data": {
+													"properties": {
+														"resource": {
+															"type": "object",
+															"properties": {
+																"total_price": {
+																	"type": "string",
+																	"format": "decimal",
+																	"example": "37794442.30"
+																},
+																"products": {
+																	"type": "object",
+																	"allOf": [
+																		{
+																			"$ref": "#/components/responses/PaginationMeta"
+																		},
+																		{
+																			"properties": {
+																				"data": {
+																					"type": "array",
+																					"items": {
+																						"type": "object",
+																						"properties": {
+																							"id": {
+																								"type": "integer",
+																								"example": 201
+																							},
+																							"code_document": {
+																								"type": [
+																									"string",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"old_barcode_product": {
+																								"type": "string",
+																								"example": "LSCJ3F1E"
+																							},
+																							"new_barcode_product": {
+																								"type": "string",
+																								"example": "LSCJ3F1E"
+																							},
+																							"new_name_product": {
+																								"type": "string",
+																								"example": "JAM TANGAN CASIO F-105W-1A ORIGINAL - F105W HITAM"
+																							},
+																							"new_quantity_product": {
+																								"type": "integer",
+																								"example": 1
+																							},
+																							"new_price_product": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "160650.00"
+																							},
+																							"old_price_product": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "321300.00"
+																							},
+																							"new_date_in_product": {
+																								"type": "string",
+																								"format": "date",
+																								"example": "2025-02-02"
+																							},
+																							"new_status_product": {
+																								"type": "string",
+																								"example": "display"
+																							},
+																							"new_quality": {
+																								"type": "string",
+																								"example": "{\"lolos\":\"lolos\",\"damaged\":null,\"abnormal\":null}"
+																							},
+																							"new_category_product": {
+																								"type": "string",
+																								"example": "FMCG"
+																							},
+																							"new_tag_product": {
+																								"type": [
+																									"string",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"new_discount": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "0.00"
+																							},
+																							"display_price": {
+																								"type": "string",
+																								"format": "decimal",
+																								"example": "160650.00"
+																							},
+																							"user_id": {
+																								"type": [
+																									"integer",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"created_at": {
+																								"type": "string",
+																								"format": "date-time",
+																								"example": "2025-02-02T09:45:24.000000Z"
+																							},
+																							"updated_at": {
+																								"type": "string",
+																								"format": "date-time",
+																								"example": "2025-02-02T09:45:24.000000Z"
+																							},
+																							"type": {
+																								"type": "string",
+																								"example": "type2"
+																							},
+																							"image": {
+																								"type": [
+																									"string",
+																									"null"
+																								],
+																								"example": null
+																							},
+																							"days_since_created": {
+																								"type": "string",
+																								"example": "0 Hari"
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	]
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"401": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"404": {
+						"$ref": "#/components/responses/ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/components/responses/ErrorResponse"
+					}
+				},
+				"security": [
+					{
+						"Authorization": []
+					}
+				]
+			}
+		},
+		"/stagingTransactionApprove": {
+			"post": {
+				"operationId": "approve-staging-transaction",
+				"tags": [
+					"staging"
+				],
+				"summary": "Approve a staging transaction",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"transaction_id": {
+										"type": "string",
+										"example": "123456"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Transaction successfully approved",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "boolean",
+													"example": true
+												},
+												"message": {
+													"type": "string",
+													"example": "Transaksi berhasil diapprove"
+												},
+												"resource": {
+													"type": "null"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/responses/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/responses/ErrorResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/responses/ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/responses/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -3823,6 +5108,9 @@
 		},
 		{
 			"name": "inbound"
+		},
+		{
+			"name": "staging"
 		}
 	],
 	"externalDocs": {
