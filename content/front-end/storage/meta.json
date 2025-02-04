@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "introduction",
+    "category",
+    "color",
+    "crud-category",
+    "crud-color",
+    "bundle",
+    "repair",
+    "add-bkl",
+    "crud-warehouse",
+    "crud-condition",
+    "crud-status",
+    "crud-brand",
+    "..."
+  ]
+}

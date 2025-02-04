@@ -3,5 +3,5 @@
     "description": "Dokumentasi tampilan WMS",
     "icon": "Layers",
     "root": true,
-    "pages": ["---Intro---", "index", "---Inbound---", "...inbound"]
+    "pages": ["---Intro---", "index", "---Inbound---", "...inbound", "---Storage---", "...storage"]
 }
