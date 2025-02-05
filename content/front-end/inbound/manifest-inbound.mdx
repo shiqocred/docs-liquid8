@@ -3,7 +3,7 @@ title: "Manifest Inbound"
 description: "Manifest inbound merupakan ..."
 ---
 
-import {Step, Steps} from 'fumadocs-ui/components/steps'
+import { Link, ShieldCheck, ReceiptText, Trash2 } from "lucide-react"
 
 ## Unggah Data
 
@@ -23,9 +23,7 @@ import {Step, Steps} from 'fumadocs-ui/components/steps'
     </Step>
 </Steps>
 
-## Kelola Data
-
-import { ArrowUpRightFromSquare, ShieldCheck, ReceiptText, Trash2 } from "lucide-react"
+## List Data
 
 File yang berhasil di unggah akan disimpan di halaman <BU>Manifest Inbound</BU>
         
@@ -33,13 +31,13 @@ File yang berhasil di unggah akan disimpan di halaman <BU>Manifest Inbound</BU>
 
 ### Deskripsi header tabel
 
-| Nama          | Deskripsi                                          | Ket                                                               |
-|---------------|----------------------------------------------------|-------------------------------------------------------------------|
-| Document Name | Nama dari dokumen yang di unggah di Inbound Proses | -                                                                 |
-| Date          | Tanggal file di unggah                             | -                                                                 |
-| Total Items   | Total barang di dalam data                         | -                                                                 |
-| Status        | Status Data                                        | [<ArrowUpRightFromSquare className='size-4'/>](#list-status-data) |
-| Action        | Opsi untuk data tersebut                           | [<ArrowUpRightFromSquare className='size-4'/>](#list-action-data) |
+| Nama          | Deskripsi                                          | Ket                                             |
+|---------------|----------------------------------------------------|-------------------------------------------------|
+| Document Name | Nama dari dokumen yang di unggah di Inbound Proses | -                                               |
+| Date          | Tanggal file di unggah                             | -                                               |
+| Total Items   | Total barang di dalam data                         | -                                               |
+| Status        | Status Data                                        | [<Link className='size-4'/>](#list-status-data) |
+| Action        | Opsi untuk data tersebut                           | [<Link className='size-4'/>](#list-action-data) |
 
 ### List status Data
 
@@ -53,18 +51,150 @@ File yang berhasil di unggah akan disimpan di halaman <BU>Manifest Inbound</BU>
 
 | Nama   | Icon                               | Deskripsi                             |
 |--------|------------------------------------|---------------------------------------|
-| Check  | <ShieldCheck className='size-4' /> | Melakukan input barang sesuai data     |
+| Check  | <ShieldCheck className='size-4' /> | Melakukan input barang sesuai data    |
 | Detail | <ReceiptText className='size-4' /> | Menampilkan halaman detail data       |
 | Delete | <Trash2 className='size-4' />      | menghapus data                        |
 
-- Pertama upload data excel dengan cara buka pada halaman “Inbound Process”, setelah terupload lalu dipilih header yang diperlukan.
-  ![Inbound Process](/image/inbound/manifest/a.png "Inbound Process")
-- Lalu jika sudah terupload data akan masuk ke dalam halaman “Manifest Inbound”, lalu klik detail pada data yang akan di cek.
-  ![Detail Manifest Inbound](/image/inbound/manifest/b.png "Detail Manifest Inbound")
-- Sebelum memulai pengecheck an barang, “jika” ingin menggunakan custom barcode maka klik barcode di pojok kanan atas dan beri format depan pada barcode. Jika sudah klik next di atas list barang.
-  ![Detail Manifest Inbound](/image/inbound/manifest/c.png "Detail Manifest Inbound")
-- Setelah klik next akan menuju ke halaman “Check”, selanjutnya masukkan barcode barang, pilih kategori “jika” barang diatas 100k, “jika” di bawah 100k tidak pilih kategori, selanjutnya pilih qualitas (abnormal, damaged, lolos)
-  ![Detail Manifest Inbound](/image/inbound/manifest/d.png "Detail Manifest Inbound")
-  ![Detail Manifest Inbound](/image/inbound/manifest/e.png "Detail Manifest Inbound")
-  ![Detail Manifest Inbound](/image/inbound/manifest/f.png "Detail Manifest Inbound")
-- Terakhir klik submit jika sudah dipilih kategori/quality product nya. **Manifest Inbound** selesai.
+
+## Detail Data
+
+Terdiri dari **Metadata** dan **List Barang**, untuk memulai scan barang dapat menekan tombol **Next** untuk berpindah ke halaman **Check**
+        
+<ImageZoom src="/image/inbound/manifest/d-1.png" width={3276} height={2018} alt="Detail Inbound " className="rounded-lg m-0" />
+
+**Barcode scan** merupakan kustom barcode untuk personalisasi barang dari sebuah data, misal barcode scan `3NAS` -> barcode baru barang `2400257` = `3NAS2400257`
+
+<ImageZoom src="/image/inbound/manifest/e-1.png" width={400} height={239} alt="Barcode Product Inbound" className="rounded-lg m-0" />
+
+**Detail scan** untuk menunjukan:
+  - sudah berapa barang yang discan secara total dan sehari.
+  - jumlah user yang men-scan data tersebut.
+  - sudah berapa barang user men-scan barang dalam sehari.
+
+<ImageZoom src="/image/inbound/manifest/f-1.png" width={2568} height={1870} alt="Barcode Product Inbound" className="rounded-lg m-0" />
+
+### Deskripsi Metadata
+
+| Nama       | Deskripsi    | Ket                                             |
+|------------|--------------|-------------------------------------------------|
+| Data Name  | Nama Data    | -                                               |
+| Status     | Status Data  | [<Link className='size-4'/>](#list-status-data) |
+| Merge Data | Kode data    | -                                               |
+| Total      | Total barang | -                                               |
+
+
+### Deskripsi header tabel
+
+| Nama               | Deskripsi                      |
+|--------------------|--------------------------------|
+| No                 | Nomor urut barang didalam data |
+| Barcode            | Barcode barang                 |
+| Product Name       | Nama barang                    |
+| Qty                | Kuantitas barang               |
+| Price              | Harga barang dalam _satuan_    |
+| Action: **Delete** | Hapus barang                   |
+
+## Check Data
+
+Halaman ini dapat di akses melalui tombol **Check** di halaman utama manifest inbound atau melalui tombol **Next** di detail manifest inbound.
+
+<ImageZoom src="/image/inbound/manifest/g-1.png" width={2568} height={1870} alt="Check Product Inbound" className="rounded-lg m-0" />
+
+Berikut Flow di halaman ini:
+
+<Steps>
+  <Step>
+    Memasukan **Barcode Barang** di kolom pencarian
+  </Step>
+  
+  <Step>
+    Mengecek dan mempperbarui **data barang**
+  </Step>
+  
+  <Step>
+    Mengisi **kualitas barang**
+  </Step>
+</Steps>
+
+### Pencarian Barcode Barang
+
+Barcode barang akan otomatis dicari datanya setelah 0,5 detik tidak ada perubahan di kolom pencarian. Jenis barang dibagi menjadi 2 yaitu:
+
+| Jenis    | Keterangan                      |
+|----------|---------------------------------|
+| Category | Harga Rp 100.000 atau diatasnya |
+| Color    | Harga dibawah Rp 100.000        |
+
+### Pengecekan dan pembaruan data
+
+Data barang dibagi menjadi <BU>Old Data</BU> dan <BU>New Data</BU>
+
+#### Tabel Old Data
+
+<ImageZoom src="/image/inbound/manifest/h-1.png" width={600} height={206} alt="Check Product Inbound" className="rounded-lg m-0" />
+
+| Kolom   | Deskripsi        | Keterangan                   |
+|---------|------------------|------------------------------|
+| Barcode | Barcode Barang   | ❌ Not Edited                |
+| Name    | Nama Barang      | ❌ Not Edited                |
+| Price   | Harga Barang     | ❌ Not Edited                |
+| Qty     | Kuantitas Barang | ✅ Edited [Required, min. 1] |
+
+#### Tabel New Data
+
+
+<BU>Category</BU>  
+
+<br /><br />
+
+<ImageZoom src="/image/inbound/manifest/i-1.png" width={600} height={206} alt="Check Product Inbound" className="rounded-lg m-0" />
+
+| Kolom | Deskripsi        | Keterangan                                    |
+|-------|------------------|-----------------------------------------------|
+| Name  | Nama Barang      | ❌ Not Edited                                 |
+| Price | Harga Barang     | ❌ Not Edited, (harga lama * diskon kategori) |
+| Qty   | Kuantitas Barang | ✅ Edited [Required, min. 1]                  |
+
+<BU>Color</BU>
+
+<br /><br />
+
+<ImageZoom src="/image/inbound/manifest/j-1.png" width={600} height={206} alt="Check Product Inbound" className="rounded-lg m-0" />
+
+| Kolom     | Deskripsi        | Keterangan                                 |
+|-----------|------------------|--------------------------------------------|
+| Tag Color | Warna barang     | ❌ Not Edited, menurut harga               |
+| Price     | Harga Barang     | ❌ Not Edited, menggunakan fix harga color |
+| Qty       | Kuantitas Barang | ✅ Edited [Required, min. 1]               |
+
+### Mengisi Kualitas Barang
+
+Terdapat 3 jenis kualitas, yaitu [<BU>Good</BU>](#good), [<BU>Damaged</BU>](#damaged) dan [<BU>Abnormal</BU>](#abnormal)
+
+#### Good
+
+Hanya untuk <BU>Price Rp. 100.000 atau diatasnya</BU>, karena untuk memilih **kategori** produk.
+
+<ImageZoom src="/image/inbound/manifest/k-1.png" width={2714} height={1210} alt="GOOD Product Inbound" className="rounded-lg m-0" />
+
+| Kolom    | Deskripsi        | Keterangan |
+|----------|------------------|------------|
+| Category | Pilih salah satu | Required   |
+
+#### Damaged
+
+<ImageZoom src="/image/inbound/manifest/l-1.png" width={2714} height={1210} alt="GOOD Product Inbound" className="rounded-lg m-0" />
+
+| Kolom       | Deskripsi        | Keterangan |
+|-------------|------------------|------------|
+| Description | Deskripsi barang | Required   |
+
+#### Abnormal
+
+<ImageZoom src="/image/inbound/manifest/m-1.png" width={2714} height={1210} alt="GOOD Product Inbound" className="rounded-lg m-0" />
+
+| Kolom       | Deskripsi        | Keterangan |
+|-------------|------------------|------------|
+| Description | Deskripsi barang | Required   |
+
+Klik **Submit** untuk menyelesaikan proses.

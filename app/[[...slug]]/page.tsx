@@ -11,10 +11,9 @@ import { Pre, CodeBlock } from "fumadocs-ui/components/codeblock";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { Callout } from "fumadocs-ui/components/callout";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 
-export default async function Page(props: {
-  params: Promise<{ slug?: string[] }>;
-}) {
+const Page = async (props: { params: Promise<{ slug?: string[] }> }) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) {
@@ -24,7 +23,14 @@ export default async function Page(props: {
   const MdxComponent = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      tableOfContent={{
+        style: "clerk",
+        single: false,
+      }}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
@@ -38,7 +44,7 @@ export default async function Page(props: {
               </b>
             ),
             ImageZoom: (props) => (
-              <div className="rounded-xl bg-gradient-to-br from-pink-500 to-blue-500 p-4 prose-no-margin">
+              <div className="rounded-xl bg-gradient-to-br from-pink-500 to-blue-500 p-4 prose-no-margin w-fit">
                 <ImageZoom {...(props as any)} />
               </div>
             ),
@@ -53,12 +59,16 @@ export default async function Page(props: {
             Card,
             Cards,
             Callout,
+            Steps,
+            Step,
           }}
         />
       </DocsBody>
     </DocsPage>
   );
-}
+};
+
+export default Page;
 
 export async function generateStaticParams() {
   return source.generateParams();
