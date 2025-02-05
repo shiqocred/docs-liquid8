@@ -1,7 +1,44 @@
 ---
 title: "Manual Inbound"
+description: "Manual inbound merupakan ..."
 ---
 
-- Pertama buka halaman Manual inbound, lalu isi semua data. “Jika” diatas 100k, maka isi kategori, “jika” tidak, maka langsung submit.
-  ![Inbound Process](/image/inbound/manual/a.png "Inbound Process")
-- Setelah klik submit maka proses **Manual Inbound** sudah selesai.
+Berikut Gambar beserta Flow penggunaan halaman <BU>Manual Inbound</BU>:
+
+## Flow
+
+<Steps>
+  <Step>
+    Buka halaman <BU>Manual Inbound</BU>
+  </Step>
+
+  <Step>
+    Isi semua kolom data
+  </Step>
+  
+  <Step>
+    Jika harga Rp. 100.000 atau diatasnya maka pilih kategori terlebih dahulu, atau jika barang mengalami kerusakan maka isi deskripsi <BU>Damaged</BU> atau <BU>Abnormal</BU> terlebih dahulu
+  </Step>
+
+  <Step>
+    Klik <BU>Submit</BU> untuk menyelesaikan
+  </Step>
+</Steps>
+
+## Gambar
+
+<ImageZoom src="/image/inbound/manual/a-1.png" width={3276} height={2018} alt="Header Inbound Process" className="rounded-lg m-0" />
+
+## Tabel Deskripsi
+
+| Kolom                 | Deskripsi                                            | Keterangan                               |
+|-----------------------|------------------------------------------------------|------------------------------------------|
+| Product Name          | Nama Barang                                          | ✅ Edited, Required                      |
+| Price                 | Harga Barang                                         | ✅ Edited, Required                      |
+| Qty                   | Kuantitas Barang                                     | ✅ Edited, Required, Angka, Min. 1       |
+| Price After Discount  | Harga setelah diskon (kategori) atau harga fix color | ✅ Edited, Required                      |
+| Good: Kategory        | Pilih salah satu                                     | ✅ Edited, harga Rp. 100.000 / diatasnya |
+| Good: Color           | Color                                                | ❌ Not Edited, dibawah harga Rp. 100.000 |
+| Abnormal: Description | Deskripsi barang Abnormal                            | ✅ Edited, Required                      |
+| Damaged: Description  | Deskripsi barang Damaged                             | ✅ Edited, Required                      |
+
