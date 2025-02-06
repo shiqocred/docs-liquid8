@@ -1,0 +1,41 @@
+---
+title: Migrate Add
+description: >-
+  Data yang di request beurpa array of json. jadi, ini merupakan batch create
+  record.  
+
+  perlu di ketahui:
+
+
+  - index ke-0 merupakan request untuk document_migratenya
+
+  - index ke-1 sampai ke n merupakan data migratenya atau request untuk create
+  migratenya
+
+  - jika tidak mengikuti aturan request seperti contoh berikut akan terjadi
+  error.
+full: true
+_openapi:
+  method: POST
+  route: /migrates
+  toc: []
+  structuredData:
+    headings: []
+    contents:
+      - content: >-
+          Data yang di request beurpa array of json. jadi, ini merupakan batch
+          create record.  
+
+          perlu di ketahui:
+
+
+          - index ke-0 merupakan request untuk document_migratenya
+
+          - index ke-1 sampai ke n merupakan data migratenya atau request untuk
+          create migratenya
+
+          - jika tidak mengikuti aturan request seperti contoh berikut akan
+          terjadi error.
+---
+
+<APIPage document={"./api.json"} operations={[{"path":"/migrates","method":"post"}]} webhooks={[]} hasHead={false} />
