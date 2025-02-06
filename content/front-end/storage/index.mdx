@@ -1,0 +1,62 @@
+---
+title: Introduction
+description: Modul storage ini merupakan modul yang menampung barang yang sudah di olah (QC)
+---
+
+## Fitur
+
+Berikut fitur modul storage:
+
+1. **Product**, dibagi menurut harga sebagai berikut:
+  <Cards>
+    <Card title="Category">
+      Product yang memiliki harga `Rp. 100.000 keatas`
+    </Card>
+    <Card title="Color">
+      Product yang memiliki harga `dibawah Rp. 100.000`
+    </Card>
+  </Cards>
+2. Bundle
+3. Palet
+4. BKL
+5. Repair
+6. QCD
+
+## Analogi
+
+Berikut Analogi modul storage:
+
+```mermaid
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#38bdf8"
+    tertiaryColor: '#e0f2fe'
+    secondaryColor: '#f9fafb'
+---
+graph TD
+A(Inbound)
+B(Product)
+C(Repair)
+D(Category)
+E(Color)
+F(QCD)
+G(Bundle)
+H(Sale)
+I(Palet)
+J(BKL)
+A -- Good --> B
+A -- Abnormal / Damaged --> C
+C -- Diperbaiki --> B
+B -- harga Rp. 100.000 keatas --> D
+B -- harga dibawah Rp. 100.000 --> E
+C -- Tidak dapat diperbaiki --> F
+D --> G
+E --> I
+G & D & E & I --> H
+B -- Lama Laku --> J
+style C fill:#fb923c
+style F fill:#f87171
+```
+

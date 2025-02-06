@@ -1,6 +1,7 @@
 {
   "pages": [
-    "introduction",
+    "index",
+    "product",
     "category",
     "color",
     "crud-category",
