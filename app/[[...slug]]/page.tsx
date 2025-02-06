@@ -12,6 +12,8 @@ import { Card, Cards } from "fumadocs-ui/components/card";
 import { Callout } from "fumadocs-ui/components/callout";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import { PlusCircle, Trash2, ReceiptText, Drill } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const Page = async (props: { params: Promise<{ slug?: string[] }> }) => {
   const params = await props.params;
@@ -61,6 +63,30 @@ const Page = async (props: { params: Promise<{ slug?: string[] }> }) => {
             Callout,
             Steps,
             Step,
+            PlusCircle: (props) => (
+              <PlusCircle
+                {...(props as any)}
+                className={cn("size-5", props.className)}
+              />
+            ),
+            Trash2: (props) => (
+              <Trash2
+                {...(props as any)}
+                className={cn("size-5", props.className)}
+              />
+            ),
+            ReceiptText: (props) => (
+              <ReceiptText
+                {...(props as any)}
+                className={cn("size-5", props.className)}
+              />
+            ),
+            Drill: (props) => (
+              <Drill
+                {...(props as any)}
+                className={cn("size-5", props.className)}
+              />
+            ),
           }}
         />
       </DocsBody>

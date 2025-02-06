@@ -1,0 +1,90 @@
+---
+title: "Stagging"
+description: "Staging merupakan ..."
+---
+
+## Flow
+
+Alur penggunaan halaman **Staging** dibagi menjadi `To Display` dan `To Repair`.
+
+### To Display
+
+Berikut Alur penggunaan halaman **Staging** untuk memindahkan barang ke `Display`:
+
+<Steps>
+  <Step>
+    Buka halaman **Product Stagging**.
+  </Step>
+
+  <Step>
+    Tekan [<BU>Action</BU>](#tampilan-awal-1) - `Add to filter`.
+  </Step>
+  
+  <Step>
+    Buka `list filter barang` dengan menekan tombol **Filtered Products**.
+  </Step>
+
+  <Step>
+    Tekan [<BU>Action</BU>](#tampilan-filtered-2) - `Delete` untuk menghapus atau Klik **Done Check All** untuk memindahkan barang di `list filter` ke `display`.
+  </Step>
+</Steps>
+
+### To Repair
+
+Berikut Alur penggunaan halaman **Staging** untuk memindahkan barang ke `Repair`:
+
+<Steps>
+  <Step>
+    Buka halaman **Product Stagging**.
+  </Step>
+
+  <Step>
+    Tekan [<BU>Action</BU>](#tampilan-awal-1) - `To LPR` untuk memunculkan `Pop Up`.
+  </Step>
+  
+  <Step>
+    Pilih jenis kerusakan `Damaged` atau `Abnormal`.
+  </Step>
+  
+  <Step>
+    Isi deskripsi kerukasan.
+  </Step>
+
+  <Step>
+    Tekan **Submit** untuk memindahkan barang ke `repair`.
+  </Step>
+</Steps>
+
+## Gambar
+
+### Tampilan Awal
+
+<ImageZoom src="/image/inbound/stagging-to-display/a-1.png" width={3276} height={2018} alt="Inbound Form Apk" className="rounded-lg m-0" />
+
+<Callout title="Ekspor Data">
+  Untuk meng-Ekspor list product stagging dalam bentuk file excel atau [.xlsx]
+</Callout>
+
+### Tampilan Filtered
+
+<ImageZoom src="/image/inbound/stagging-to-display/b-1.png" width={3276} height={2018} alt="Inbound Form Apk" className="rounded-lg m-0" />
+
+### Tampilan Pop-up To LPR
+
+<ImageZoom src="/image/inbound/stagging-to-display/c-1.png" width={450} height={293} alt="Inbound Form Apk" className="rounded-lg m-0" />
+
+## Tabel Action
+
+### Tampilan Awal
+
+| Action        | Icon            | Deskripsi                                                        |
+|---------------|-----------------|------------------------------------------------------------------|
+| Add to filter | <PlusCircle />  | Menambah barang ke `list filter` untuk dipindahkan ke `display`  |
+| To LPR        | <Drill />       | Memindahkan barang ke `repair`                                   |
+
+### Tampilan Filtered
+
+| Action        | Icon       | Deskripsi                                |
+|---------------|------------|------------------------------------------|
+| Delete        | <Trash2 /> | Menghapus data barang dari `list filter` |
+
