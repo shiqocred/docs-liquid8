@@ -1,0 +1,100 @@
+---
+title: Category
+description: Product by Category adalah Product yang memiliki harga Rp. 100.000 keatas
+---
+
+## Flow
+
+Alur penggunaan halaman **Product by Category** dibagi menjadi `Edit` dan `Hapus` product.
+
+### Detail & Edit Barang
+
+Berikut Alur penggunaan halaman **Product by Category** untuk `menampilkan detail` dan `memperbarui` data barang:
+
+<Steps>
+  <Step>
+    Buka halaman **Product by Category**.
+  </Step>
+
+  <Step>
+    Tekan [<BU>Action</BU>](#tabel-tampilan-awal) - `Detail`.
+  </Step>
+  
+  <Step>
+    Sesuaikan isi [<BU>Kolom Data</BU>](#tabel-kolom-data).
+  </Step>
+  
+  <Step>
+    Tekan `Update` untuk memperbarui data.
+  </Step>
+
+  <Step>
+    Tekan `Print` untuk mencetak barcode barang.
+  </Step>
+</Steps>
+
+<Callout title="Print Barcode">
+    Perbarui data terlebih dahulu untuk mencetak barcode data yang terbaru.
+</Callout>
+
+### Hapus Barang
+
+Berikut Alur penggunaan halaman **Product by Category** untuk `menghapus` barang:
+
+<Steps>
+  <Step>
+    Buka halaman **Product by Category**.
+  </Step>
+
+  <Step>
+    Tekan [<BU>Action</BU>](#tabel-tampilan-awal) - `Delete` untuk memunculkan `Pop Up`.
+  </Step>
+  
+  <Step>
+    Tekan `Confirm` untuk menghapus data barang.
+  </Step>
+</Steps>
+
+<Callout title="Hapus Barang" type="warn">
+    Perintah ini bersifat permanen, data barang yang telah dihapus tidak dapat dikembalikan.
+</Callout>
+
+## Gambar
+
+### Tampilan Awal [#gambar-tampilan-awal]
+
+<ImageZoom src="/image/storage/product/category/a.png" width={3276} height={2018} alt="" className="rounded-lg m-0" />
+
+<Callout title="Ekspor Data">
+  Untuk meng-Ekspor list `product by category` dalam bentuk file excel atau [.xlsx]
+</Callout>
+
+### Tampilan Pop-up Detail [#gambar-tampilan-pop-up-detail]
+
+<ImageZoom src="/image/storage/product/category/b.png" width={3276} height={2018} alt="" className="rounded-lg m-0" />
+
+## Tabel Action
+
+### Tampilan Awal [#tabel-tampilan-awal]
+
+| Action | Icon            | Deskripsi                                    |
+|--------|-----------------|----------------------------------------------|
+| Detail | <ReceiptText /> | Membuka pop-up `detail` & `edit` data barang |
+| Delete | <Trash2 />      | Membuka pop-up `hapus` barang                |
+
+## Tabel Kolom Data
+
+| Kolom         | Ref      | Deskripsi                    | Ket                                                          |
+|---------------|----------|------------------------------|--------------------------------------------------------------|
+| Barcode       | Old Data | Barcode awal barang          | ❌ Not Edited                                                |
+| Name Product  | Old Data | Nama awal barang             | ❌ Not Edited                                                |
+| Qty           | Old Data | Kuantitas awal barang        | ❌ Not Edited                                                |
+| Price         | Old Data | Harga awal barang            | ✅ Edited, required, angka                                   |
+| Barcode       | New Data | Barcode baru barang          | ❌ Not Edited                                                |
+| Name Product  | New Data | Nama baru barang             | ✅ Edited, required                                          |
+| Qty           | New Data | Kuantitas baru barang        | ✅ Edited, required, angka, min. 1                           |
+| Price         | New Data | Harga baru barang            | ✅ Edited, required, angka, harga lama * diskon kategori (%) |
+| Kategori      | New Data | Kategori baru barang         | ✅ Edited, required, pilih salah satu                        |
+| Discount      | -        | Discount untuk display price | ✅ Edited, required, angka                                   |
+| Display Price | -        | Discount untuk display price | ❌ Not Edited, harga baru * diskon (%)                       |
+
