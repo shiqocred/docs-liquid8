@@ -1,28 +1,17 @@
 ---
 title: Introduction
+description: Inbound merupakan proses pemasukkan barang.
 ---
 
-import {Step, Steps} from 'fumadocs-ui/components/steps'
+## Flow
 
-Inbound merupakan proses pemasukkan barang, terdapat beberapa jalur untuk inbound, yaitu: 
+Terdapat beberapa jalur untuk inbound, yaitu: 
 
-<Steps>
-    <Step>
-        **[Manifest Inbound](/front-end/inbound/manifest-inbound)**
-    </Step>
 
-    <Step>
-        **[Manual Inbound](/front-end/inbound/manual-inbound)**
-    </Step>
-
-    <Step>
-        **[Bulking Inbound](/front-end/inbound/bulking-inbound)**
-    </Step>
-
-    <Step>
-        **[Inbound Form Apk](/front-end/inbound/inbound-form-apk)**
-    </Step>
-</Steps>
+1. [Manifest Inbound](/front-end/inbound/manifest-inbound)
+2. [Manual Inbound](/front-end/inbound/manual-inbound)
+3. [Bulking Inbound](/front-end/inbound/bulking-inbound)
+4. [Inbound Form Apk](/front-end/inbound/inbound-form-apk)
 
 
 Setelah proses tersebut selesai maka barang akan masuk beberapa alur **Stagging** berikut:
@@ -41,3 +30,33 @@ Setelah proses tersebut selesai maka barang akan masuk beberapa alur **Stagging*
         Pindah barang Stagging ke Repair
     </Card>
 </Cards>
+
+## Analogi
+
+```mermaid
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#38bdf8"
+    tertiaryColor: '#e0f2fe'
+---
+flowchart TD
+subgraph AA [Input]
+A[Manual Inbound];
+B[Inbound Process];
+C[Manifest Inbound];
+D[Inbound From APK];
+end
+E[Stagging];
+subgraph BB [Output]
+F[To Display];
+G[To Repair];
+end
+A --> E;
+B --> C;
+C --> E;
+D --> E;
+E --> F;
+E --> G;
+```
