@@ -10,6 +10,7 @@
     "build:docs": "node ./scripts/generate-docs.mjs"
   },
   "dependencies": {
+    "@theguild/remark-mermaid": "^0.2.0",
     "ajv": "^8.17.1",
     "fumadocs-core": "14.7.7",
     "fumadocs-mdx": "11.3.1",
