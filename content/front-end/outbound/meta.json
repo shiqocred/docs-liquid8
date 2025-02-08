@@ -1,20 +1,10 @@
 {
   "pages": [
-    "index",
-    "product",
-    "category",
-    "color",
-    "crud-category",
-    "crud-color",
-    "bundle",
-    "repair",
-    "add-bkl",
-    "crud-warehouse",
-    "crud-condition",
-    "crud-status",
-    "crud-brand",
-    "palet",
-    "treatment-list-product-r",
+    "migrate-color",
+    "migrate-category",
+    "buyer",
+    "sale",
+    "b2b",
     "..."
   ]
 }

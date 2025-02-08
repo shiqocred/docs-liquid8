@@ -1,0 +1,255 @@
+---
+title: "Sale Create"
+---
+
+### Alur utama create sale :
+
+<Steps>
+  <Step>
+    Memasukkan buyer
+  </Step>
+
+  <Step>
+    Memasukkan discount (harus dilakukan sebelum memasukkan produk)
+  </Step>
+
+  <Step>
+    Memasukkan product
+  </Step>
+
+  <Step>
+    Menambahkan carton (jika perlu)
+  </Step>
+
+  <Step>
+    Memakai PPN (jika perlu)
+  </Step>
+
+  <Step>
+    Memberikan voucher (jika perlu)
+  </Step>
+  
+  <Step>
+    Finish
+  </Step>
+</Steps>
+
+### 1. Memasukkan Buyer (Wajib Diisi)
+
+- Klik button buyer di atas halaman, akan muncul pop up dengan list nama buyer. Klik button plus untuk memilih buyer mana yang sedang melakukan proses transaksi.
+
+  <ImageZoom
+    src="/image/outbound/sale/create/input-buyer/a-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan Buyer"
+    className="rounded-lg m-0"
+  />
+
+  Pilih Buyer
+
+  <ImageZoom
+    src="/image/outbound/sale/create/input-buyer/a-2.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan Buyer"
+    className="rounded-lg m-0"
+  />
+
+- Jika sudah diklik button plus, data yang muncul pada detail sale akan sesuai dengan data buyer yang sudah dipilih.
+  {" "}
+  <ImageZoom
+    src="/image/outbound/sale/create/input-buyer/b-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan Buyer"
+    className="rounded-lg m-0"
+  />
+
+### 2. Memasukkan Discount Keseluruhan (Optional)
+
+- Klik button Discount yang berwarna kuning untuk memberikan custom discount (discount \* old price). Akan muncul pop up untuk memberikan inputan Discount berbentuk persentase (%).
+
+  <ImageZoom
+    src="/image/outbound/sale/create/discount/a-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan Discount"
+    className="rounded-lg m-0"
+  />
+
+- Jika sudah diisi maka discount tersebut siap dipakai dan akan muncul pada detail sale.
+
+  <ImageZoom
+    src="/image/outbound/sale/create/discount/b-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan Discount"
+    className="rounded-lg m-0"
+  />
+
+### 3. Memasukkan Product (Wajib)
+
+- Inputkan barcode product pada kolom search di area bawah halaman. Product akan otomatis terinput ke dalam list nya
+
+  <ImageZoom
+    src="/image/outbound/sale/create/product/a-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan product"
+    className="rounded-lg m-0"
+  />
+
+- **NOTE : Jika tidak bisa di search.** klik button search (icon lup), akan muncul pop up list product. Klik button plus untuk menambah barang.
+
+  <ImageZoom
+    src="/image/outbound/sale/create/product/b-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan Product"
+    className="rounded-lg m-0"
+  />
+
+- **NOTE : Jika barang diberikan gabor (discount %).** Pada list barang terdapat button Gabor berwarna ungu. Klik untuk memberikan gabor pada product tersebut. Jika sudah diklik akan muncul form input discount (berupa persentase %).
+
+  <ImageZoom
+    src="/image/outbound/sale/create/product/c-1.png"
+    width={3276}
+    height={2018}
+    alt="Discount Gabor"
+    className="rounded-lg m-0"
+  />
+
+  input discount gabor
+
+  <ImageZoom
+    src="/image/outbound/sale/create/product/c-2.png"
+    width={3276}
+    height={2018}
+    alt="Discount Gabor"
+    className="rounded-lg m-0"
+  />
+
+- **NOTE : Jika barang diberika discount berupa harga fixed (update price).** Klik button Update Price berwarna kuning untuk mengubah harga barang secara langsung.
+
+  <ImageZoom
+    src="/image/outbound/sale/create/product/d-1.png"
+    width={3276}
+    height={2018}
+    alt="discount berupa harga fixed"
+    className="rounded-lg m-0"
+  />
+
+  input discount berupa harga fixed
+
+  <ImageZoom
+    src="/image/outbound/sale/create/product/d-2.png"
+    width={3276}
+    height={2018}
+    alt="discount berupa harga fixed"
+    className="rounded-lg m-0"
+  />
+
+### 4. Menambahkan Carton Box (Optional)
+
+- Pada section carton box **JIKA** diperlukan klik button dengan icon tanda panah terbalik dengan background bewarna kuning. Akan muncul pop up form input dengan inputan **Qty** untuk memberikan jumlah carton box dan **Per Unit** untuk memberikan harga carton box per unitnya.
+
+  <ImageZoom
+    src="/image/outbound/sale/create/carton/a-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan carton"
+    className="rounded-lg m-0"
+  />
+  Input Qty dan Harga
+  <ImageZoom
+    src="/image/outbound/sale/create/carton/a-2.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan carton"
+    className="rounded-lg m-0"
+  />
+
+- Data akan otomatis terupdate pada detail sale.
+  <ImageZoom
+    src="/image/outbound/sale/create/carton/b-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan carton"
+    className="rounded-lg m-0"
+  />
+
+### 5. Menambahkan PPN (Optional)
+
+- Pada section ppn **JIKA** diperlukan maka **STEP 1** klik icon gear untuk memilih ppn yang digunakan, **STEP 2** jika sudah maka tutup pop up list ppn, lalu check list pada “With PPN”
+
+  <ImageZoom
+    src="/image/outbound/sale/create/ppn/a-1.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan ppn"
+    className="rounded-lg m-0"
+  />
+  pilih ppn yang digunakan
+  <ImageZoom
+    src="/image/outbound/sale/create/ppn/a-2.png"
+    width={3276}
+    height={2018}
+    alt="Memasukkan ppn"
+    className="rounded-lg m-0"
+  />
+
+- Jika sudah akan otomatis berubah ppn dan Grand Total nya
+  <ImageZoom
+    src="/image/outbound/sale/create/ppn/b-1.png"
+    width={3276}
+    height={2018}
+    alt="grand total ppn"
+    className="rounded-lg m-0"
+  />
+
+### 6. Menambahkan Voucher (Optional)
+
+- Pada atas halaman setelah semua sudah diisi, ada button voucher untuk memberikan diskon tambahan keseluruhan. klik button voucher dan akan muncul pop up form input. Isi kan voucher dengan jumlah uang yang akan dikurangkan.
+
+  <ImageZoom
+    src="/image/outbound/sale/create/voucher/a-1.png"
+    width={3276}
+    height={2018}
+    alt="Masukkan Voucher"
+    className="rounded-lg m-0"
+  />
+  Input voucher
+  <ImageZoom
+    src="/image/outbound/sale/create/voucher/a-2.png"
+    width={3276}
+    height={2018}
+    alt="Masukkan Voucher"
+    className="rounded-lg m-0"
+  />
+
+- Jika sudah harga total akan muncul sesuai dengan voucher yang diberikan.
+  <ImageZoom
+    src="/image/outbound/sale/create/voucher/b-1.png"
+    width={3276}
+    height={2018}
+    alt="Voucher"
+    className="rounded-lg m-0"
+  />
+
+
+### 7. Finishing (Peringatan!)
+
+- Jika sudah semua klik button Sale, maka sudah selseai alur Sale Create
+
+  <ImageZoom
+    src="/image/outbound/sale/create/finishing/a-1.png"
+    width={3276}
+    height={2018}
+    alt="Masukkan Voucher"
+    className="rounded-lg m-0"
+  />
+
+- **NOTE : Gabor, Update Price, Voucher akan diperlukan approvmentdari admin/SPV untuk menyelesaikan sale.**
+
+- **NOTE : SPV Wajib melakukan approvment product sale yang memiliki Gabor, Update Price, Voucher.**
