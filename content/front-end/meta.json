@@ -1,7 +1,17 @@
 {
-    "title": "Front End",
-    "description": "Dokumentasi tampilan WMS",
-    "icon": "Layers",
-    "root": true,
-    "pages": ["---Intro---", "index", "...partial", "---Inbound---", "...inbound", "---Storage---", "...storage"]
+  "title": "Front End",
+  "description": "Dokumentasi tampilan WMS",
+  "icon": "Layers",
+  "root": true,
+  "pages": [
+    "---Intro---",
+    "index",
+    "...partial",
+    "---Inbound---",
+    "...inbound",
+    "---Storage---",
+    "...storage",
+    "---Outbound---",
+    "...outbound"
+  ]
 }
